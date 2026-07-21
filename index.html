@@ -1030,6 +1030,7 @@ body { min-height: 100%; }
       let realtime = null;
       let editingId = null;
       let currentNickname = '';
+      let pendingInvite = (new URLSearchParams(location.search).get('invite')||'').trim().toUpperCase();
       let view = new Date(now.getFullYear(), now.getMonth(), 1);
       let selected = localDate(now);
       let memberFilter = '全部';
@@ -1038,6 +1039,7 @@ body { min-height: 100%; }
       const conflict = (event) => events.find(e => e.id !== event.id && e.date === event.date && e.time === event.time && e.people.some(p => event.people.includes(p)));
       const mismatch = (event) => events.find(e => e.id !== event.id && e.title === event.title && (e.date !== event.date || e.time !== event.time));
       const toast = (msg) => { const el = $('#stage-toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2200); };
+      const clearInviteUrl = () => history.replaceState({},'',location.pathname+location.hash);
       const eventPeople = (people) => `<span class="event-people" aria-label="同行：${people.join('、')}">${people.slice(0,3).map(p=>`<span class="event-avatar">${p.slice(0,1)}</span>`).join('')}${people.length>3?`<span class="event-avatar-more">+${people.length-3}</span>`:''}</span>`;
 
       function renderFilters() {
@@ -1105,6 +1107,8 @@ body { min-height: 100%; }
         if(error){ $('#stage-join-status').textContent=error.message; return; }
         if(!data?.length){ $('#stage-auth').hidden=false; $('#stage-join-view').hidden=false; return; }
         groups=data.map(row=>row.groups).filter(Boolean); currentNickname=data[0].profiles?.nickname||'群友';
+        if(pendingInvite&&!groups.some(g=>g.invite_code===pendingInvite)){const invite=pendingInvite;pendingInvite='';const {data:joined,error:joinError}=await db.rpc('join_group_by_code',{invite,display_name:currentNickname});clearInviteUrl();if(!joinError){groupId=joined;return enterApp();}toast(joinError.message);}
+        else if(pendingInvite){pendingInvite='';clearInviteUrl();}
         const preferred=groupId||localStorage.getItem('tongchang-group-id'); groupId=groups.some(g=>g.id===preferred)?preferred:groups[0].id;
         $('#stage-account-name').textContent=currentNickname; renderGroups();
         $('#stage-auth').hidden=true; root.querySelectorAll('.app-private').forEach(el=>el.hidden=false);
@@ -1118,7 +1122,7 @@ body { min-height: 100%; }
       $('#stage-prev').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();});
       $('#stage-next').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();});
       $('#stage-today').addEventListener('click',()=>{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
-      $('#stage-share').addEventListener('click',async()=>{ const url=location.href.split('#')[0]; try{await navigator.clipboard.writeText(url);toast('群日历网址已复制');}catch(_){prompt('复制群日历网址',url);} });
+      $('#stage-share').addEventListener('click',async()=>{const current=groups.find(g=>g.id===groupId);const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('invite',current.invite_code);try{await navigator.clipboard.writeText(url.toString());toast('带邀请码的群日历链接已复制');}catch(_){prompt('复制群日历链接',url.toString());}});
       $('#stage-group-select').addEventListener('change',ev=>switchGroup(ev.target.value));
       $('#stage-rooms').addEventListener('click',()=>{renderGroups();$('#stage-room-join-status').textContent='';$('#stage-room-create-status').textContent='';$('#stage-room-dialog').showModal();});
       $('#stage-room-close').addEventListener('click',()=>$('#stage-room-dialog').close());
@@ -1126,7 +1130,8 @@ body { min-height: 100%; }
       $('#stage-join-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const code=new FormData(ev.currentTarget).get('code').trim().toUpperCase();const {data,error}=await db.rpc('join_group_by_code',{invite:code,display_name:currentNickname});if(error){$('#stage-room-join-status').textContent=error.message;return;}groupId=data;await enterApp();$('#stage-room-dialog').close();toast('已加入新的小群');});
       $('#stage-create-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const name=new FormData(ev.currentTarget).get('name').trim();const {data,error}=await db.rpc('create_group',{group_name:name});if(error){$('#stage-room-create-status').textContent=error.message;return;}groupId=data.id;await enterApp();$('#stage-room-dialog').close();toast(`小群已创建，邀请码 ${data.invite_code}`);});
       $('#stage-logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload();});
-      $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);const nickname=fd.get('nickname').trim();const code=fd.get('code').trim().toUpperCase();$('#stage-join-status').textContent=code?'正在加入朋友的日历…':'正在创建你的共享日历…';const {data,error}=code?await db.rpc('join_group_by_code',{invite:code,display_name:nickname}):await db.rpc('create_first_group',{display_name:nickname});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=code?data:data.id;await enterApp();if(!code)toast(`共享日历已创建，邀请码 ${data.invite_code}`);});
+      $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);const nickname=fd.get('nickname').trim();const code=fd.get('code').trim().toUpperCase();$('#stage-join-status').textContent=code?'正在加入朋友的日历…':'正在创建你的共享日历…';const {data,error}=code?await db.rpc('join_group_by_code',{invite:code,display_name:nickname}):await db.rpc('create_first_group',{display_name:nickname});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=code?data:data.id;if(code){pendingInvite='';clearInviteUrl();}await enterApp();if(!code)toast(`共享日历已创建，邀请码 ${data.invite_code}`);});
+      if(pendingInvite)$('#stage-join-form').elements.code.value=pendingInvite;
       const {data:{session:initialSession}}=await db.auth.getSession(); session=initialSession;
       db.auth.onAuthStateChange(async(_event,nextSession)=>{if(nextSession&&!session){session=nextSession;await enterApp();}});
       if(!session){const {data,error}=await db.auth.signInAnonymously();if(error){$('#stage-join-status').textContent='请先在 Supabase 开启匿名登录：'+error.message;}else{session=data.session;await enterApp();}}else{await enterApp();}
