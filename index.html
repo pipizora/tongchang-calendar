@@ -1,23 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Tongchang Shared Calendar</title>
-<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
-</head>
-<body>
-<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Tongchang Shared Calendar" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
-&lt;title&gt;Tongchang Shared Calendar&lt;/title&gt;
-&lt;style&gt;:root {
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>同场观演日历</title>
+<style>:root {
   color-scheme: light dark;
   background-color: var(--background) !important;
 
@@ -55,9 +43,9 @@
   --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
 
   /* Internal implementation variables; not part of the agent contract. */
-  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
   --font-mono:
-    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
     monospace;
   --font-size-normal: max(11px, var(--font-size-base));
   --font-size-tooltip: calc(var(--font-size-base) - 1px);
@@ -77,7 +65,7 @@
   --radius-2xl: calc(var(--radius) * 1.6);
   --radius-full: 9999px;
   --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
-  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
 
   /* Legacy aliases; not part of the current agent contract. */
   --viz-bg: transparent;
@@ -95,11 +83,11 @@
   --color-border-secondary: var(--border);
 }
 
-:root[data-theme=&quot;light&quot;] {
+:root[data-theme="light"] {
   color-scheme: light;
 }
 
-:root[data-theme=&quot;dark&quot;] {
+:root[data-theme="dark"] {
   color-scheme: dark;
 }
 
@@ -107,7 +95,7 @@
   box-sizing: border-box;
 }
 
-html &gt; body {
+html > body {
   margin: 0;
   padding: 5px;
   color: var(--foreground);
@@ -206,7 +194,7 @@ code:not(pre code) {
   vertical-align: top;
 }
 
-.table-responsive &gt; .table :is(th, td) {
+.table-responsive > .table :is(th, td) {
   overflow-wrap: break-word;
 }
 
@@ -235,12 +223,12 @@ code:not(pre code) {
   padding-inline-end: 16px;
 }
 
-.table :is(.text-end, [align=&quot;right&quot;]) {
+.table :is(.text-end, [align="right"]) {
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
 
-.table :is(.text-center, [align=&quot;center&quot;]) {
+.table :is(.text-center, [align="center"]) {
   text-align: center;
 }
 
@@ -268,7 +256,7 @@ code:not(pre code) {
   background: var(--card);
 }
 
-#widget &gt; :not(.card) {
+#widget > :not(.card) {
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
@@ -371,7 +359,7 @@ small,
   gap: 8px;
 }
 
-.viz-controls &gt; .form-label {
+.viz-controls > .form-label {
   display: grid;
   min-width: min(100%, 260px);
   flex: 1 1 280px;
@@ -381,7 +369,7 @@ small,
   margin-bottom: 0;
 }
 
-.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
   grid-column: 1 / -1;
 }
 
@@ -496,13 +484,13 @@ a.btn {
   color: var(--muted-foreground);
 }
 
-.form-control[type=&quot;file&quot;] {
+.form-control[type="file"] {
   padding: 0;
   overflow: hidden;
   cursor: var(--cursor-interaction, pointer);
 }
 
-.form-control[type=&quot;file&quot;]::file-selector-button {
+.form-control[type="file"]::file-selector-button {
   min-height: 26px;
   margin-right: 8px;
   padding: 0 8px;
@@ -514,22 +502,22 @@ a.btn {
   font: inherit;
 }
 
-.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
   background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
 }
 
-.form-control-color[type=&quot;color&quot;] {
+.form-control-color[type="color"] {
   width: 40px;
   height: 28px;
   padding: 3px;
   cursor: var(--cursor-interaction, pointer);
 }
 
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+.form-control-color[type="color"]::-webkit-color-swatch {
   border: 0;
   border-radius: calc(var(--radius-lg) - 4px);
   corner-shape: superellipse(1.5);
@@ -609,7 +597,7 @@ textarea.form-control {
     box-shadow 150ms;
 }
 
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
   border-color: var(--input);
   border-radius: var(--radius-sm);
   corner-shape: superellipse(1.5);
@@ -622,28 +610,28 @@ textarea.form-control {
   background-color: var(--card);
 }
 
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
   border-color: var(--primary);
   background-color: var(--primary);
 }
 
 .form-check:not(.form-switch)
-  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  .form-check-input[type="checkbox"]:checked::before {
   display: block;
   width: 100%;
   height: 100%;
   background: var(--primary-foreground);
-  content: &quot;&quot;;
+  content: "";
   mask: var(--checkmark-image) center / 12px 12px no-repeat;
 }
 
-.form-check-input[type=&quot;radio&quot;] {
+.form-check-input[type="radio"] {
   width: 14px;
   height: 14px;
   border-radius: var(--radius-full);
 }
 
-.form-check-input[type=&quot;radio&quot;]:checked {
+.form-check-input[type="radio"]:checked {
   border: 2px solid var(--primary);
   background:
     radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
@@ -697,7 +685,7 @@ textarea.form-control {
   border-radius: var(--radius-full);
   background: light-dark(var(--primary-foreground), var(--foreground));
   box-shadow: var(--shadow-sm);
-  content: &quot;&quot;;
+  content: "";
   transform: translate(2px, -50%);
   transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }
@@ -776,8 +764,8 @@ textarea.form-control {
 }
 
 .btn:not(.btn-primary, .viz-tile):is(
-    [aria-pressed=&quot;true&quot;],
-    [aria-selected=&quot;true&quot;],
+    [aria-pressed="true"],
+    [aria-selected="true"],
     .is-selected
   ) {
   border-color: var(--primary);
@@ -785,7 +773,7 @@ textarea.form-control {
   background: var(--primary);
 }
 
-.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
   border-color: var(--primary);
   box-shadow: inset 0 0 0 1px var(--primary);
 }
@@ -801,7 +789,7 @@ svg {
   height: auto;
 }
 
-#widget &gt; svg {
+#widget > svg {
   width: 100%;
 }
 
@@ -810,12 +798,14 @@ svg {
   color: var(--destructive);
 }
 
-html&gt;body{padding:0}&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div id=&quot;stage-calendar-app&quot; class=&quot;stage-app&quot;&gt;
-  &lt;style&gt;
-    #stage-calendar-app { color: var(--foreground); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; max-width: 1180px; margin: 0 auto; padding: 18px; }
+html, body { margin: 0; padding: 0; }
+body { min-height: 100%; }
+</style>
+</head>
+<body>
+<div id="stage-calendar-app" class="stage-app">
+  <style>
+    #stage-calendar-app { color: var(--foreground); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 1180px; margin: 0 auto; padding: 18px; }
     #stage-calendar-app * { box-sizing: border-box; letter-spacing: 0; }
     #stage-calendar-app button, #stage-calendar-app input, #stage-calendar-app select { font: inherit; }
     #stage-calendar-app .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
@@ -833,7 +823,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     #stage-calendar-app .month-title span { color: var(--muted-foreground); font-size: 13px; }
     #stage-calendar-app .filters { margin: 0 0 16px; }
     #stage-calendar-app .filter-chip { border: 1px solid var(--border); background: transparent; color: var(--foreground); border-radius: 999px; padding: 6px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-    #stage-calendar-app .filter-chip[aria-pressed=&quot;true&quot;] { color: var(--primary-foreground); background: var(--primary); border-color: var(--primary); }
+    #stage-calendar-app .filter-chip[aria-pressed="true"] { color: var(--primary-foreground); background: var(--primary); border-color: var(--primary); }
     #stage-calendar-app .avatar-dot { width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; background: color-mix(in srgb, var(--viz-series-2) 22%, var(--card)); font-size: 10px; color: var(--foreground); }
     #stage-calendar-app .calendar { border-top: 1px solid var(--border); border-left: 1px solid var(--border); display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
     #stage-calendar-app .weekday { min-height: 36px; padding: 9px 8px; color: var(--muted-foreground); font-size: 12px; text-align: center; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -920,89 +910,92 @@ html&gt;body{padding:0}&lt;/style&gt;
       #stage-calendar-app .day { min-height: 88px; }
       #stage-calendar-app .field-row { grid-template-columns: 1fr; }
     }
-  &lt;/style&gt;
+  </style>
 
-  &lt;section class=&quot;auth-shell card&quot; id=&quot;stage-auth&quot;&gt;
-    &lt;div id=&quot;stage-join-view&quot;&gt;
-      &lt;h1&gt;加入看剧群&lt;/h1&gt;
-      &lt;p&gt;设置群友能看到的昵称，再输入群邀请码。&lt;/p&gt;
-      &lt;form class=&quot;auth-form&quot; id=&quot;stage-join-form&quot;&gt;
-        &lt;label class=&quot;form-label&quot;&gt;昵称&lt;input class=&quot;form-control&quot; name=&quot;nickname&quot; required maxlength=&quot;20&quot; placeholder=&quot;例如：小满&quot;&gt;&lt;/label&gt;
-        &lt;label class=&quot;form-label&quot;&gt;邀请码&lt;input class=&quot;form-control&quot; name=&quot;code&quot; required value=&quot;TONGCHANG&quot;&gt;&lt;/label&gt;
-        &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary btn-block&quot;&gt;加入群组&lt;/button&gt;
-        &lt;div class=&quot;auth-status&quot; id=&quot;stage-join-status&quot;&gt;&lt;/div&gt;
-      &lt;/form&gt;
-    &lt;/div&gt;
-  &lt;/section&gt;
+  <section class="auth-shell card" id="stage-auth">
+    <div id="stage-join-view">
+      <h1>加入看剧群</h1>
+      <p>设置群友能看到的昵称，再输入群邀请码。</p>
+      <form class="auth-form" id="stage-join-form">
+        <label class="form-label">昵称<input class="form-control" name="nickname" required maxlength="20" placeholder="例如：小满"></label>
+        <label class="form-label">邀请码<input class="form-control" name="code" required value="TONGCHANG"></label>
+        <button type="submit" class="btn btn-primary btn-block">加入群组</button>
+        <div class="auth-status" id="stage-join-status"></div>
+      </form>
+    </div>
+  </section>
 
-  &lt;header class=&quot;topbar app-private&quot; hidden&gt;
-    &lt;div class=&quot;brand&quot;&gt;
-      &lt;div class=&quot;brand-mark&quot;&gt;&lt;i data-lucide=&quot;tickets&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
-      &lt;div class=&quot;brand-copy&quot;&gt;&lt;strong&gt;同场&lt;/strong&gt;&lt;span&gt;我们的观演档期&lt;/span&gt;&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;top-actions&quot;&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;stage-share&quot;&gt;&lt;i data-lucide=&quot;share-2&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span class=&quot;share-label&quot;&gt;分享排期&lt;/span&gt;&lt;/button&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;stage-add&quot;&gt;&lt;i data-lucide=&quot;plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;添加场次&lt;/button&gt;
-      &lt;div class=&quot;account&quot;&gt;&lt;span class=&quot;account-name&quot; id=&quot;stage-account-name&quot;&gt;&lt;/span&gt;&lt;button type=&quot;button&quot; class=&quot;btn icon-btn&quot; id=&quot;stage-logout&quot; aria-label=&quot;退出登录&quot; data-tooltip=&quot;退出登录&quot;&gt;&lt;i data-lucide=&quot;log-out&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/header&gt;
+  <header class="topbar app-private" hidden>
+    <div class="brand">
+      <div class="brand-mark"><i data-lucide="tickets" aria-hidden="true"></i></div>
+      <div class="brand-copy"><strong>同场</strong><span>我们的观演档期</span></div>
+    </div>
+    <div class="top-actions">
+      <button type="button" class="btn" id="stage-share"><i data-lucide="share-2" aria-hidden="true"></i><span class="share-label">分享排期</span></button>
+      <button type="button" class="btn btn-primary" id="stage-add"><i data-lucide="plus" aria-hidden="true"></i>添加场次</button>
+      <div class="account"><span class="account-name" id="stage-account-name"></span><button type="button" class="btn icon-btn" id="stage-logout" aria-label="退出登录" data-tooltip="退出登录"><i data-lucide="log-out" aria-hidden="true"></i></button></div>
+    </div>
+  </header>
 
-  &lt;main class=&quot;overview app-private&quot; hidden&gt;
-    &lt;section class=&quot;calendar-area&quot; aria-label=&quot;观演月历&quot;&gt;
-      &lt;div class=&quot;calendar-head&quot;&gt;
-        &lt;div class=&quot;month-title&quot;&gt;&lt;h1 id=&quot;stage-month-title&quot;&gt;&lt;/h1&gt;&lt;span id=&quot;stage-month-summary&quot;&gt;&lt;/span&gt;&lt;/div&gt;
-        &lt;div class=&quot;month-nav&quot;&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn icon-btn&quot; id=&quot;stage-prev&quot; aria-label=&quot;上个月&quot; data-tooltip=&quot;上个月&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;stage-today&quot;&gt;今天&lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn icon-btn&quot; id=&quot;stage-next&quot; aria-label=&quot;下个月&quot; data-tooltip=&quot;下个月&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;filters&quot;&gt;&lt;div class=&quot;filter-list&quot; id=&quot;stage-filters&quot; aria-label=&quot;按成员筛选&quot;&gt;&lt;/div&gt;&lt;/div&gt;
-      &lt;div class=&quot;calendar&quot; id=&quot;stage-calendar&quot; role=&quot;grid&quot; aria-label=&quot;日历&quot;&gt;&lt;/div&gt;
-      &lt;div class=&quot;legend&quot; aria-label=&quot;演出类型图例&quot;&gt;
-        &lt;span&gt;&lt;i class=&quot;legend-dot&quot;&gt;&lt;/i&gt;音乐剧&lt;/span&gt;&lt;span&gt;&lt;i class=&quot;legend-dot play&quot;&gt;&lt;/i&gt;话剧&lt;/span&gt;&lt;span&gt;&lt;i class=&quot;legend-dot dance&quot;&gt;&lt;/i&gt;舞剧&lt;/span&gt;
-      &lt;/div&gt;
-    &lt;/section&gt;
-    &lt;aside class=&quot;side card&quot; aria-live=&quot;polite&quot;&gt;
-      &lt;h2 class=&quot;side-date&quot; id=&quot;stage-side-date&quot;&gt;&lt;/h2&gt;
-      &lt;div class=&quot;side-sub&quot; id=&quot;stage-side-sub&quot;&gt;&lt;/div&gt;
-      &lt;div id=&quot;stage-details&quot;&gt;&lt;/div&gt;
-    &lt;/aside&gt;
-  &lt;/main&gt;
+  <main class="overview app-private" hidden>
+    <section class="calendar-area" aria-label="观演月历">
+      <div class="calendar-head">
+        <div class="month-title"><h1 id="stage-month-title"></h1><span id="stage-month-summary"></span></div>
+        <div class="month-nav">
+          <button type="button" class="btn icon-btn" id="stage-prev" aria-label="上个月" data-tooltip="上个月"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
+          <button type="button" class="btn" id="stage-today">今天</button>
+          <button type="button" class="btn icon-btn" id="stage-next" aria-label="下个月" data-tooltip="下个月"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="filters"><div class="filter-list" id="stage-filters" aria-label="按成员筛选"></div></div>
+      <div class="calendar" id="stage-calendar" role="grid" aria-label="日历"></div>
+      <div class="legend" aria-label="演出类型图例">
+        <span><i class="legend-dot"></i>音乐剧</span><span><i class="legend-dot play"></i>话剧</span><span><i class="legend-dot dance"></i>舞剧</span>
+      </div>
+    </section>
+    <aside class="side card" aria-live="polite">
+      <h2 class="side-date" id="stage-side-date"></h2>
+      <div class="side-sub" id="stage-side-sub"></div>
+      <div id="stage-details"></div>
+    </aside>
+  </main>
 
-  &lt;dialog id=&quot;stage-dialog&quot; class=&quot;app-private&quot;&gt;
-    &lt;form id=&quot;stage-form&quot;&gt;
-      &lt;div class=&quot;dialog-head&quot;&gt;&lt;h2&gt;添加观演场次&lt;/h2&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost icon-btn&quot; id=&quot;stage-close&quot; aria-label=&quot;关闭&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
-      &lt;div class=&quot;dialog-body&quot;&gt;
-        &lt;label class=&quot;form-label&quot;&gt;剧名&lt;input class=&quot;form-control&quot; name=&quot;title&quot; required placeholder=&quot;例如：悲惨世界&quot;&gt;&lt;/label&gt;
-        &lt;div class=&quot;field-row&quot;&gt;
-          &lt;label class=&quot;form-label&quot;&gt;类型&lt;select class=&quot;form-select&quot; name=&quot;type&quot;&gt;&lt;option value=&quot;musical&quot;&gt;音乐剧&lt;/option&gt;&lt;option value=&quot;play&quot;&gt;话剧&lt;/option&gt;&lt;option value=&quot;dance&quot;&gt;舞剧&lt;/option&gt;&lt;option value=&quot;other&quot;&gt;其他&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
-          &lt;label class=&quot;form-label&quot;&gt;日期&lt;input class=&quot;form-control&quot; type=&quot;date&quot; name=&quot;date&quot; required&gt;&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;field-row&quot;&gt;
-          &lt;label class=&quot;form-label&quot;&gt;开场时间&lt;input class=&quot;form-control&quot; type=&quot;time&quot; name=&quot;time&quot; required value=&quot;19:30&quot;&gt;&lt;/label&gt;
-          &lt;label class=&quot;form-label&quot;&gt;剧场&lt;input class=&quot;form-control&quot; name=&quot;venue&quot; required placeholder=&quot;例如：上海文化广场&quot;&gt;&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;label class=&quot;form-label&quot;&gt;同行人&lt;div class=&quot;checks&quot; id=&quot;stage-member-checks&quot;&gt;&lt;/div&gt;&lt;/label&gt;
-        &lt;label class=&quot;form-label&quot;&gt;座位 / 备注&lt;input class=&quot;form-control&quot; name=&quot;note&quot; placeholder=&quot;例如：二楼 A 区 12 排&quot;&gt;&lt;/label&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;dialog-foot&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;stage-cancel&quot;&gt;取消&lt;/button&gt;&lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;保存场次&lt;/button&gt;&lt;/div&gt;
-    &lt;/form&gt;
-  &lt;/dialog&gt;
-  &lt;div class=&quot;toast&quot; id=&quot;stage-toast&quot; hidden&gt;&lt;/div&gt;
+  <dialog id="stage-dialog" class="app-private">
+    <form id="stage-form">
+      <div class="dialog-head"><h2>添加观演场次</h2><button type="button" class="btn btn-ghost icon-btn" id="stage-close" aria-label="关闭"><i data-lucide="x" aria-hidden="true"></i></button></div>
+      <div class="dialog-body">
+        <label class="form-label">剧名<input class="form-control" name="title" required placeholder="例如：悲惨世界"></label>
+        <div class="field-row">
+          <label class="form-label">类型<select class="form-select" name="type"><option value="musical">音乐剧</option><option value="play">话剧</option><option value="dance">舞剧</option><option value="other">其他</option></select></label>
+          <label class="form-label">日期<input class="form-control" type="date" name="date" required></label>
+        </div>
+        <div class="field-row">
+          <label class="form-label">开场时间<input class="form-control" type="time" name="time" required value="19:30"></label>
+          <label class="form-label">剧场<input class="form-control" name="venue" required placeholder="例如：上海文化广场"></label>
+        </div>
+        <label class="form-label">同行人<div class="checks" id="stage-member-checks"></div></label>
+        <label class="form-label">座位 / 备注<input class="form-control" name="note" placeholder="例如：二楼 A 区 12 排"></label>
+      </div>
+      <div class="dialog-foot"><button type="button" class="btn" id="stage-cancel">取消</button><button type="submit" class="btn btn-primary">保存场次</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="stage-toast" hidden></div>
 
-  &lt;script src=&quot;https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script&gt;
-    (async () =&gt; {
-      const root = document.getElementById(&#x27;stage-calendar-app&#x27;);
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
+  <script>
+    (async () => {
+      const root = document.getElementById('stage-calendar-app');
       if (!root) return;
-      const $ = (s) =&gt; root.querySelector(s);
-      const SUPABASE_URL = &#x27;https://sajwoidfperjkylqinos.supabase.co&#x27;;
-      const SUPABASE_KEY = &#x27;sb_publishable_mNJUv0nQc7saDcBLTYHlvA__yJSy2ca&#x27;;
-      const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const typeMap = { musical: &#x27;音乐剧&#x27;, play: &#x27;话剧&#x27;, dance: &#x27;舞剧&#x27;, other: &#x27;其他&#x27; };
+      const $ = (s) => root.querySelector(s);
+      const SUPABASE_URL = 'https://sajwoidfperjkylqinos.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_mNJUv0nQc7saDcBLTYHlvA__yJSy2ca';
+      const mobileSafeLock = async (_name, _acquireTimeout, fn) => await fn();
+      const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: { lock: mobileSafeLock, persistSession: true, autoRefreshToken: true }
+      });
+      const typeMap = { musical: '音乐剧', play: '话剧', dance: '舞剧', other: '其他' };
       const now = new Date();
-      const localDate = (date) =&gt; [date.getFullYear(), String(date.getMonth()+1).padStart(2,&#x27;0&#x27;), String(date.getDate()).padStart(2,&#x27;0&#x27;)].join(&#x27;-&#x27;);
+      const localDate = (date) => [date.getFullYear(), String(date.getMonth()+1).padStart(2,'0'), String(date.getDate()).padStart(2,'0')].join('-');
       let events = [];
       let members = [];
       let session = null;
@@ -1010,94 +1003,94 @@ html&gt;body{padding:0}&lt;/style&gt;
       let realtime = null;
       let view = new Date(now.getFullYear(), now.getMonth(), 1);
       let selected = localDate(now);
-      let memberFilter = &#x27;全部&#x27;;
-      const visible = () =&gt; memberFilter === &#x27;全部&#x27; ? events : events.filter(e =&gt; e.peopleIds.includes(memberFilter));
-      const fmtDate = (iso) =&gt; { const d = new Date(iso+&#x27;T00:00:00&#x27;); return `${d.getMonth()+1}月${d.getDate()}日 周${&#x27;日一二三四五六&#x27;[d.getDay()]}`; };
-      const conflict = (event) =&gt; events.find(e =&gt; e.id !== event.id &amp;&amp; e.date === event.date &amp;&amp; e.time === event.time &amp;&amp; e.peopleIds.some(p =&gt; event.peopleIds.includes(p)));
-      const mismatch = (event) =&gt; events.find(e =&gt; e.id !== event.id &amp;&amp; e.title === event.title &amp;&amp; (e.date !== event.date || e.time !== event.time));
-      const toast = (msg) =&gt; { const el = $(&#x27;#stage-toast&#x27;); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() =&gt; el.hidden = true, 2200); };
-      const eventPeople = (people) =&gt; `&lt;span class=&quot;event-people&quot; aria-label=&quot;同行：${people.join(&#x27;、&#x27;)}&quot;&gt;${people.slice(0,3).map(p=&gt;`&lt;span class=&quot;event-avatar&quot;&gt;${p.slice(0,1)}&lt;/span&gt;`).join(&#x27;&#x27;)}${people.length&gt;3?`&lt;span class=&quot;event-avatar-more&quot;&gt;+${people.length-3}&lt;/span&gt;`:&#x27;&#x27;}&lt;/span&gt;`;
+      let memberFilter = '全部';
+      const visible = () => memberFilter === '全部' ? events : events.filter(e => e.peopleIds.includes(memberFilter));
+      const fmtDate = (iso) => { const d = new Date(iso+'T00:00:00'); return `${d.getMonth()+1}月${d.getDate()}日 周${'日一二三四五六'[d.getDay()]}`; };
+      const conflict = (event) => events.find(e => e.id !== event.id && e.date === event.date && e.time === event.time && e.peopleIds.some(p => event.peopleIds.includes(p)));
+      const mismatch = (event) => events.find(e => e.id !== event.id && e.title === event.title && (e.date !== event.date || e.time !== event.time));
+      const toast = (msg) => { const el = $('#stage-toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2200); };
+      const eventPeople = (people) => `<span class="event-people" aria-label="同行：${people.join('、')}">${people.slice(0,3).map(p=>`<span class="event-avatar">${p.slice(0,1)}</span>`).join('')}${people.length>3?`<span class="event-avatar-more">+${people.length-3}</span>`:''}</span>`;
 
       function renderFilters() {
-        $(&#x27;#stage-filters&#x27;).innerHTML = [{id:&#x27;全部&#x27;,nickname:&#x27;全部&#x27;}, ...members].map(m =&gt; `&lt;button type=&quot;button&quot; class=&quot;filter-chip&quot; data-member=&quot;${m.id}&quot; aria-pressed=&quot;${memberFilter===m.id}&quot;&gt;${m.id===&#x27;全部&#x27; ? &#x27;&lt;i data-lucide=&quot;users&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&#x27; : `&lt;span class=&quot;avatar-dot&quot;&gt;${m.nickname.slice(0,1)}&lt;/span&gt;`}${m.nickname}&lt;/button&gt;`).join(&#x27;&#x27;);
-        $(&#x27;#stage-filters&#x27;).querySelectorAll(&#x27;button&#x27;).forEach(b =&gt; b.addEventListener(&#x27;click&#x27;, () =&gt; { memberFilter = b.dataset.member; render(); }));
+        $('#stage-filters').innerHTML = [{id:'全部',nickname:'全部'}, ...members].map(m => `<button type="button" class="filter-chip" data-member="${m.id}" aria-pressed="${memberFilter===m.id}">${m.id==='全部' ? '<i data-lucide="users" aria-hidden="true"></i>' : `<span class="avatar-dot">${m.nickname.slice(0,1)}</span>`}${m.nickname}</button>`).join('');
+        $('#stage-filters').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { memberFilter = b.dataset.member; render(); }));
       }
       function renderCalendar() {
         const y=view.getFullYear(), m=view.getMonth();
         const first = new Date(y,m,1); const start = new Date(y,m,1-first.getDay());
-        const monthEvents = visible().filter(e =&gt; new Date(e.date+&#x27;T00:00:00&#x27;).getMonth()===m &amp;&amp; new Date(e.date+&#x27;T00:00:00&#x27;).getFullYear()===y);
-        $(&#x27;#stage-month-title&#x27;).textContent = `${y}年 ${m+1}月`;
-        $(&#x27;#stage-month-summary&#x27;).textContent = `${monthEvents.length} 场 · ${new Set(monthEvents.flatMap(e=&gt;e.people)).size} 人参与`;
-        let html = [&#x27;日&#x27;,&#x27;一&#x27;,&#x27;二&#x27;,&#x27;三&#x27;,&#x27;四&#x27;,&#x27;五&#x27;,&#x27;六&#x27;].map(x=&gt;`&lt;div class=&quot;weekday&quot; role=&quot;columnheader&quot;&gt;周${x}&lt;/div&gt;`).join(&#x27;&#x27;);
-        for(let i=0;i&lt;42;i++) {
+        const monthEvents = visible().filter(e => new Date(e.date+'T00:00:00').getMonth()===m && new Date(e.date+'T00:00:00').getFullYear()===y);
+        $('#stage-month-title').textContent = `${y}年 ${m+1}月`;
+        $('#stage-month-summary').textContent = `${monthEvents.length} 场 · ${new Set(monthEvents.flatMap(e=>e.people)).size} 人参与`;
+        let html = ['日','一','二','三','四','五','六'].map(x=>`<div class="weekday" role="columnheader">周${x}</div>`).join('');
+        for(let i=0;i<42;i++) {
           const d=new Date(start); d.setDate(start.getDate()+i); const iso=localDate(d);
-          const dayEvents=visible().filter(e=&gt;e.date===iso); const cls=[&#x27;day&#x27;, d.getMonth()!==m?&#x27;is-outside&#x27;:&#x27;&#x27;, iso===selected?&#x27;is-selected&#x27;:&#x27;&#x27;, iso===localDate(now)?&#x27;is-today&#x27;:&#x27;&#x27;].filter(Boolean).join(&#x27; &#x27;);
-          html += `&lt;button type=&quot;button&quot; class=&quot;${cls}&quot; data-date=&quot;${iso}&quot; role=&quot;gridcell&quot; aria-label=&quot;${fmtDate(iso)}，${dayEvents.length}场演出&quot;&gt;&lt;span class=&quot;day-number&quot;&gt;${d.getDate()}&lt;/span&gt;${dayEvents.slice(0,2).map(e=&gt;`&lt;span class=&quot;event-pill ${e.type}&quot;&gt;&lt;span class=&quot;event-main&quot;&gt;&lt;span class=&quot;event-time&quot;&gt;${e.time}&lt;/span&gt;&lt;span class=&quot;event-title&quot;&gt;${e.title}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;event-venue&quot;&gt;${typeMap[e.type]} · ${e.venue}&lt;/span&gt;${eventPeople(e.people)}&lt;/span&gt;`).join(&#x27;&#x27;)}${dayEvents.length&gt;2?`&lt;span class=&quot;more&quot;&gt;还有 ${dayEvents.length-2} 场&lt;/span&gt;`:&#x27;&#x27;}&lt;/button&gt;`;
+          const dayEvents=visible().filter(e=>e.date===iso); const cls=['day', d.getMonth()!==m?'is-outside':'', iso===selected?'is-selected':'', iso===localDate(now)?'is-today':''].filter(Boolean).join(' ');
+          html += `<button type="button" class="${cls}" data-date="${iso}" role="gridcell" aria-label="${fmtDate(iso)}，${dayEvents.length}场演出"><span class="day-number">${d.getDate()}</span>${dayEvents.slice(0,2).map(e=>`<span class="event-pill ${e.type}"><span class="event-main"><span class="event-time">${e.time}</span><span class="event-title">${e.title}</span></span><span class="event-venue">${typeMap[e.type]} · ${e.venue}</span>${eventPeople(e.people)}</span>`).join('')}${dayEvents.length>2?`<span class="more">还有 ${dayEvents.length-2} 场</span>`:''}</button>`;
         }
-        $(&#x27;#stage-calendar&#x27;).innerHTML=html;
-        $(&#x27;#stage-calendar&#x27;).querySelectorAll(&#x27;.day&#x27;).forEach(b=&gt;b.addEventListener(&#x27;click&#x27;,()=&gt;{ selected=b.dataset.date; const d=new Date(selected+&#x27;T00:00:00&#x27;); if(d.getMonth()!==view.getMonth()){view=new Date(d.getFullYear(),d.getMonth(),1);} render(); }));
+        $('#stage-calendar').innerHTML=html;
+        $('#stage-calendar').querySelectorAll('.day').forEach(b=>b.addEventListener('click',()=>{ selected=b.dataset.date; const d=new Date(selected+'T00:00:00'); if(d.getMonth()!==view.getMonth()){view=new Date(d.getFullYear(),d.getMonth(),1);} render(); }));
       }
       function renderDetails() {
-        const dayEvents=visible().filter(e=&gt;e.date===selected).sort((a,b)=&gt;a.time.localeCompare(b.time));
-        $(&#x27;#stage-side-date&#x27;).textContent=fmtDate(selected);
-        $(&#x27;#stage-side-sub&#x27;).textContent=dayEvents.length ? `${dayEvents.length} 场安排` : &#x27;暂无安排&#x27;;
-        if(!dayEvents.length) { $(&#x27;#stage-details&#x27;).innerHTML=&#x27;&lt;div class=&quot;empty&quot;&gt;&lt;i data-lucide=&quot;calendar-plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;这天还空着，适合约一场&lt;/div&gt;&#x27;; return; }
-        $(&#x27;#stage-details&#x27;).innerHTML=dayEvents.map(e=&gt;{
+        const dayEvents=visible().filter(e=>e.date===selected).sort((a,b)=>a.time.localeCompare(b.time));
+        $('#stage-side-date').textContent=fmtDate(selected);
+        $('#stage-side-sub').textContent=dayEvents.length ? `${dayEvents.length} 场安排` : '暂无安排';
+        if(!dayEvents.length) { $('#stage-details').innerHTML='<div class="empty"><i data-lucide="calendar-plus" aria-hidden="true"></i>这天还空着，适合约一场</div>'; return; }
+        $('#stage-details').innerHTML=dayEvents.map(e=>{
           const c=conflict(e), mm=mismatch(e);
-          return `&lt;article class=&quot;event-detail&quot;&gt;&lt;div class=&quot;event-kind&quot;&gt;&lt;i class=&quot;kind-dot&quot; style=&quot;background:var(--viz-series-${e.type===&#x27;play&#x27;?2:e.type===&#x27;dance&#x27;?3:e.type===&#x27;other&#x27;?4:1})&quot;&gt;&lt;/i&gt;${typeMap[e.type]}&lt;/div&gt;&lt;h3&gt;${e.title}&lt;/h3&gt;&lt;div class=&quot;meta&quot;&gt;&lt;span&gt;&lt;i data-lucide=&quot;clock&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${e.time}&lt;/span&gt;&lt;span&gt;&lt;i data-lucide=&quot;map-pin&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${e.venue}&lt;/span&gt;${e.note?`&lt;span&gt;&lt;i data-lucide=&quot;ticket&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;${e.note}&lt;/span&gt;`:&#x27;&#x27;}&lt;/div&gt;&lt;div class=&quot;people&quot;&gt;${e.people.map(p=&gt;`&lt;span class=&quot;person&quot; aria-label=&quot;${p}&quot;&gt;${p.slice(0,1)}&lt;/span&gt;`).join(&#x27;&#x27;)}&lt;span class=&quot;person-count&quot;&gt;${e.people.join(&#x27;、&#x27;)}&lt;/span&gt;&lt;/div&gt;${c?`&lt;div class=&quot;alert&quot;&gt;&lt;i data-lucide=&quot;triangle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;时间冲突：和「${c.title}」同一时间，${c.peopleIds.filter(p=&gt;e.peopleIds.includes(p)).map(id=&gt;members.find(m=&gt;m.id===id)?.nickname||&#x27;群友&#x27;).join(&#x27;、&#x27;)} 可能撞场&lt;/span&gt;&lt;/div&gt;`:&#x27;&#x27;}${!c&amp;&amp;mm?`&lt;div class=&quot;alert&quot;&gt;&lt;i data-lucide=&quot;circle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;同剧不同场：群里还有 ${fmtDate(mm.date)} ${mm.time} 的票，请确认场次&lt;/span&gt;&lt;/div&gt;`:&#x27;&#x27;}&lt;div class=&quot;event-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; data-delete=&quot;${e.id}&quot;&gt;&lt;i data-lucide=&quot;trash-2&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;删除&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;`;
-        }).join(&#x27;&#x27;);
-        $(&#x27;#stage-details&#x27;).querySelectorAll(&#x27;[data-delete]&#x27;).forEach(b=&gt;b.addEventListener(&#x27;click&#x27;,async()=&gt;{ const {error}=await db.from(&#x27;performances&#x27;).delete().eq(&#x27;id&#x27;,b.dataset.delete); if(error) toast(error.message); else toast(&#x27;已删除场次&#x27;); }));
+          return `<article class="event-detail"><div class="event-kind"><i class="kind-dot" style="background:var(--viz-series-${e.type==='play'?2:e.type==='dance'?3:e.type==='other'?4:1})"></i>${typeMap[e.type]}</div><h3>${e.title}</h3><div class="meta"><span><i data-lucide="clock" aria-hidden="true"></i>${e.time}</span><span><i data-lucide="map-pin" aria-hidden="true"></i>${e.venue}</span>${e.note?`<span><i data-lucide="ticket" aria-hidden="true"></i>${e.note}</span>`:''}</div><div class="people">${e.people.map(p=>`<span class="person" aria-label="${p}">${p.slice(0,1)}</span>`).join('')}<span class="person-count">${e.people.join('、')}</span></div>${c?`<div class="alert"><i data-lucide="triangle-alert" aria-hidden="true"></i><span>时间冲突：和「${c.title}」同一时间，${c.peopleIds.filter(p=>e.peopleIds.includes(p)).map(id=>members.find(m=>m.id===id)?.nickname||'群友').join('、')} 可能撞场</span></div>`:''}${!c&&mm?`<div class="alert"><i data-lucide="circle-alert" aria-hidden="true"></i><span>同剧不同场：群里还有 ${fmtDate(mm.date)} ${mm.time} 的票，请确认场次</span></div>`:''}<div class="event-actions"><button type="button" class="btn btn-ghost" data-delete="${e.id}"><i data-lucide="trash-2" aria-hidden="true"></i>删除</button></div></article>`;
+        }).join('');
+        $('#stage-details').querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',async()=>{ const {error}=await db.from('performances').delete().eq('id',b.dataset.delete); if(error) toast(error.message); else toast('已删除场次'); }));
       }
       function render() { renderFilters(); renderCalendar(); renderDetails(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
-      function openDialog(){ const form=$(&#x27;#stage-form&#x27;); form.reset(); form.elements.date.value=selected; form.elements.time.value=&#x27;19:30&#x27;; $(&#x27;#stage-member-checks&#x27;).innerHTML=members.map(m=&gt;`&lt;label class=&quot;form-check&quot;&gt;&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; name=&quot;people&quot; value=&quot;${m.id}&quot; ${m.id===session.user.id?&#x27;checked&#x27;:&#x27;&#x27;}&gt;&lt;span class=&quot;form-check-label&quot;&gt;${m.nickname}&lt;/span&gt;&lt;/label&gt;`).join(&#x27;&#x27;); $(&#x27;#stage-dialog&#x27;).showModal(); }
+      function openDialog(){ const form=$('#stage-form'); form.reset(); form.elements.date.value=selected; form.elements.time.value='19:30'; $('#stage-member-checks').innerHTML=members.map(m=>`<label class="form-check"><input class="form-check-input" type="checkbox" name="people" value="${m.id}" ${m.id===session.user.id?'checked':''}><span class="form-check-label">${m.nickname}</span></label>`).join(''); $('#stage-dialog').showModal(); }
       async function loadData() {
         const [{data:memberRows,error:memberError},{data:eventRows,error:eventError}] = await Promise.all([
-          db.from(&#x27;group_members&#x27;).select(&#x27;user_id, profiles!group_members_user_id_fkey(nickname,avatar_url)&#x27;).eq(&#x27;group_id&#x27;,groupId),
-          db.from(&#x27;performances&#x27;).select(&#x27;id,title,type,event_date,start_time,venue,note,attendance(user_id,seat_note,profiles!attendance_user_id_fkey(nickname,avatar_url))&#x27;).eq(&#x27;group_id&#x27;,groupId).order(&#x27;event_date&#x27;).order(&#x27;start_time&#x27;)
+          db.from('group_members').select('user_id, profiles!group_members_user_id_fkey(nickname,avatar_url)').eq('group_id',groupId),
+          db.from('performances').select('id,title,type,event_date,start_time,venue,note,attendance(user_id,seat_note,profiles!attendance_user_id_fkey(nickname,avatar_url))').eq('group_id',groupId).order('event_date').order('start_time')
         ]);
         if(memberError||eventError){ toast((memberError||eventError).message); return; }
-        members=(memberRows||[]).map(r=&gt;({id:r.user_id,nickname:r.profiles?.nickname||&#x27;群友&#x27;,avatar_url:r.profiles?.avatar_url||&#x27;&#x27;}));
-        events=(eventRows||[]).map(r=&gt;({id:r.id,title:r.title,type:r.type,date:r.event_date,time:String(r.start_time).slice(0,5),venue:r.venue,note:r.note||&#x27;&#x27;,peopleIds:(r.attendance||[]).map(a=&gt;a.user_id),people:(r.attendance||[]).map(a=&gt;a.profiles?.nickname||&#x27;群友&#x27;)}));
+        members=(memberRows||[]).map(r=>({id:r.user_id,nickname:r.profiles?.nickname||'群友',avatar_url:r.profiles?.avatar_url||''}));
+        events=(eventRows||[]).map(r=>({id:r.id,title:r.title,type:r.type,date:r.event_date,time:String(r.start_time).slice(0,5),venue:r.venue,note:r.note||'',peopleIds:(r.attendance||[]).map(a=>a.user_id),people:(r.attendance||[]).map(a=>a.profiles?.nickname||'群友')}));
         render();
       }
       async function enterApp() {
-        const {data,error}=await db.from(&#x27;group_members&#x27;).select(&#x27;group_id, profiles!group_members_user_id_fkey(nickname)&#x27;).eq(&#x27;user_id&#x27;,session.user.id).limit(1).maybeSingle();
-        if(error){ $(&#x27;#stage-join-status&#x27;).textContent=error.message; return; }
-        if(!data){ $(&#x27;#stage-auth&#x27;).hidden=false; $(&#x27;#stage-join-view&#x27;).hidden=false; return; }
-        groupId=data.group_id; $(&#x27;#stage-account-name&#x27;).textContent=data.profiles?.nickname||session.user.email;
-        $(&#x27;#stage-auth&#x27;).hidden=true; root.querySelectorAll(&#x27;.app-private&#x27;).forEach(el=&gt;el.hidden=false);
+        const {data,error}=await db.from('group_members').select('group_id, profiles!group_members_user_id_fkey(nickname)').eq('user_id',session.user.id).limit(1).maybeSingle();
+        if(error){ $('#stage-join-status').textContent=error.message; return; }
+        if(!data){ $('#stage-auth').hidden=false; $('#stage-join-view').hidden=false; return; }
+        groupId=data.group_id; $('#stage-account-name').textContent=data.profiles?.nickname||session.user.email;
+        $('#stage-auth').hidden=true; root.querySelectorAll('.app-private').forEach(el=>el.hidden=false);
         await loadData();
         if(realtime) await db.removeChannel(realtime);
-        realtime=db.channel(`group-${groupId}`).on(&#x27;postgres_changes&#x27;,{event:&#x27;*&#x27;,schema:&#x27;public&#x27;,table:&#x27;performances&#x27;,filter:`group_id=eq.${groupId}`},loadData).on(&#x27;postgres_changes&#x27;,{event:&#x27;*&#x27;,schema:&#x27;public&#x27;,table:&#x27;attendance&#x27;},loadData).subscribe();
+        realtime=db.channel(`group-${groupId}`).on('postgres_changes',{event:'*',schema:'public',table:'performances',filter:`group_id=eq.${groupId}`},loadData).on('postgres_changes',{event:'*',schema:'public',table:'attendance'},loadData).subscribe();
       }
-      $(&#x27;#stage-add&#x27;).addEventListener(&#x27;click&#x27;,openDialog);
-      $(&#x27;#stage-close&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;$(&#x27;#stage-dialog&#x27;).close());
-      $(&#x27;#stage-cancel&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;$(&#x27;#stage-dialog&#x27;).close());
-      $(&#x27;#stage-form&#x27;).addEventListener(&#x27;submit&#x27;,async(ev)=&gt;{ ev.preventDefault(); const fd=new FormData(ev.currentTarget); const people=fd.getAll(&#x27;people&#x27;); if(!people.length){toast(&#x27;请至少选择一位同行人&#x27;);return;} const {data:performance,error}=await db.from(&#x27;performances&#x27;).insert({group_id:groupId,title:fd.get(&#x27;title&#x27;),type:fd.get(&#x27;type&#x27;),event_date:fd.get(&#x27;date&#x27;),start_time:fd.get(&#x27;time&#x27;),venue:fd.get(&#x27;venue&#x27;),note:fd.get(&#x27;note&#x27;),created_by:session.user.id}).select(&#x27;id&#x27;).single(); if(error){toast(error.message);return;} const {error:attendError}=await db.from(&#x27;attendance&#x27;).insert(people.map(user_id=&gt;({performance_id:performance.id,user_id}))); if(attendError){toast(attendError.message);return;} selected=fd.get(&#x27;date&#x27;); const d=new Date(selected+&#x27;T00:00:00&#x27;); view=new Date(d.getFullYear(),d.getMonth(),1); $(&#x27;#stage-dialog&#x27;).close(); await loadData(); toast(&#x27;场次已加入排期&#x27;); });
-      $(&#x27;#stage-prev&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();});
-      $(&#x27;#stage-next&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();});
-      $(&#x27;#stage-today&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
-      $(&#x27;#stage-share&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{ const url=location.href.split(&#x27;#&#x27;)[0]; try{await navigator.clipboard.writeText(url);toast(&#x27;群日历网址已复制&#x27;);}catch(_){prompt(&#x27;复制群日历网址&#x27;,url);} });
-      $(&#x27;#stage-logout&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{await db.auth.signOut();location.reload();});
-      $(&#x27;#stage-join-form&#x27;).addEventListener(&#x27;submit&#x27;,async(ev)=&gt;{ev.preventDefault();const fd=new FormData(ev.currentTarget);$(&#x27;#stage-join-status&#x27;).textContent=&#x27;正在加入…&#x27;;const {data,error}=await db.rpc(&#x27;join_group_by_code&#x27;,{invite:fd.get(&#x27;code&#x27;).trim().toUpperCase(),display_name:fd.get(&#x27;nickname&#x27;).trim()});if(error){$(&#x27;#stage-join-status&#x27;).textContent=error.message;return;}groupId=data;await enterApp();});
+      $('#stage-add').addEventListener('click',openDialog);
+      $('#stage-close').addEventListener('click',()=>$('#stage-dialog').close());
+      $('#stage-cancel').addEventListener('click',()=>$('#stage-dialog').close());
+      $('#stage-form').addEventListener('submit',async(ev)=>{ ev.preventDefault(); const fd=new FormData(ev.currentTarget); const people=fd.getAll('people'); if(!people.length){toast('请至少选择一位同行人');return;} const {data:performance,error}=await db.from('performances').insert({group_id:groupId,title:fd.get('title'),type:fd.get('type'),event_date:fd.get('date'),start_time:fd.get('time'),venue:fd.get('venue'),note:fd.get('note'),created_by:session.user.id}).select('id').single(); if(error){toast(error.message);return;} const {error:attendError}=await db.from('attendance').insert(people.map(user_id=>({performance_id:performance.id,user_id}))); if(attendError){toast(attendError.message);return;} selected=fd.get('date'); const d=new Date(selected+'T00:00:00'); view=new Date(d.getFullYear(),d.getMonth(),1); $('#stage-dialog').close(); await loadData(); toast('场次已加入排期'); });
+      $('#stage-prev').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();});
+      $('#stage-next').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();});
+      $('#stage-today').addEventListener('click',()=>{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
+      $('#stage-share').addEventListener('click',async()=>{ const url=location.href.split('#')[0]; try{await navigator.clipboard.writeText(url);toast('群日历网址已复制');}catch(_){prompt('复制群日历网址',url);} });
+      $('#stage-logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload();});
+      $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);$('#stage-join-status').textContent='正在加入…';const {data,error}=await db.rpc('join_group_by_code',{invite:fd.get('code').trim().toUpperCase(),display_name:fd.get('nickname').trim()});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=data;await enterApp();});
       const {data:{session:initialSession}}=await db.auth.getSession(); session=initialSession;
-      db.auth.onAuthStateChange(async(_event,nextSession)=&gt;{if(nextSession&amp;&amp;!session){session=nextSession;await enterApp();}});
-      if(!session){const {data,error}=await db.auth.signInAnonymously();if(error){$(&#x27;#stage-join-status&#x27;).textContent=&#x27;请先在 Supabase 开启匿名登录：&#x27;+error.message;}else{session=data.session;await enterApp();}}else{await enterApp();}
+      db.auth.onAuthStateChange(async(_event,nextSession)=>{if(nextSession&&!session){session=nextSession;await enterApp();}});
+      if(!session){const {data,error}=await db.auth.signInAnonymously();if(error){$('#stage-join-status').textContent='请先在 Supabase 开启匿名登录：'+error.message;}else{session=data.session;await enterApp();}}else{await enterApp();}
       if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}});
     })();
-  &lt;/script&gt;
-&lt;/div&gt;
+  </script>
+</div>
 
-&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
+<script src="https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js"></script>
+<script src="https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js"></script>
+<script>
+(() => {
   if (window.FloatingUIDOM == null) {
     return;
   }
   const { autoUpdate, computePosition, flip, offset, shift, size } =
     window.FloatingUIDOM;
-  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
   const tooltipId = `codex-visualization-tooltip-${
     window.crypto?.randomUUID?.() ?? Date.now().toString(36)
   }`;
@@ -1112,30 +1105,30 @@ html&gt;body{padding:0}&lt;/style&gt;
   let positionRequest = 0;
   let skipDelayUntil = 0;
 
-  const getTrigger = (target) =&gt;
+  const getTrigger = (target) =>
     target?.nodeType === Node.ELEMENT_NODE
-      ? target.closest(&quot;[data-tooltip]&quot;)
+      ? target.closest("[data-tooltip]")
       : null;
-  const containsTarget = (trigger, target) =&gt;
-    target?.nodeType != null &amp;&amp; trigger.contains(target);
-  const getContent = (trigger) =&gt;
-    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
-  const getPlacement = (trigger) =&gt; {
-    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
-    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
   };
-  const getTooltip = () =&gt; {
+  const getTooltip = () => {
     if (tooltip == null) {
-      tooltip = document.createElement(&quot;div&quot;);
+      tooltip = document.createElement("div");
       tooltip.id = tooltipId;
-      tooltip.className = &quot;tooltip&quot;;
-      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
     }
     return tooltip;
   };
-  const setDescribedBy = (trigger, described) =&gt; {
+  const setDescribedBy = (trigger, described) => {
     const ids = new Set(
-      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+      (trigger.getAttribute("aria-describedby") ?? "")
         .split(/\s+/)
         .filter(Boolean),
     );
@@ -1145,19 +1138,19 @@ html&gt;body{padding:0}&lt;/style&gt;
       ids.delete(tooltipId);
     }
     if (ids.size === 0) {
-      trigger.removeAttribute(&quot;aria-describedby&quot;);
+      trigger.removeAttribute("aria-describedby");
     } else {
-      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
     }
   };
-  const clearOpenTimeout = () =&gt; {
+  const clearOpenTimeout = () => {
     if (openTimeout != null) {
       window.clearTimeout(openTimeout);
       openTimeout = null;
     }
     pendingTrigger = null;
   };
-  const closeTooltip = (activateSkipDelay = true) =&gt; {
+  const closeTooltip = (activateSkipDelay = true) => {
     clearOpenTimeout();
     positionRequest += 1;
     autoUpdateCleanup?.();
@@ -1172,7 +1165,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       skipDelayUntil = Date.now() + skipDelay;
     }
   };
-  const updatePosition = (trigger, floating) =&gt; {
+  const updatePosition = (trigger, floating) => {
     const request = ++positionRequest;
     void computePosition(trigger, floating, {
       middleware: [
@@ -1183,34 +1176,34 @@ html&gt;body{padding:0}&lt;/style&gt;
           padding: tooltipGap,
           apply({ availableHeight, availableWidth, elements }) {
             elements.floating.style.setProperty(
-              &quot;--tooltip-available-width&quot;,
+              "--tooltip-available-width",
               `${Math.max(0, availableWidth)}px`,
             );
             elements.floating.style.setProperty(
-              &quot;--tooltip-available-height&quot;,
+              "--tooltip-available-height",
               `${Math.max(0, availableHeight)}px`,
             );
           },
         }),
       ],
       placement: getPlacement(trigger),
-      strategy: &quot;fixed&quot;,
+      strategy: "fixed",
     })
-      .then(({ x, y }) =&gt; {
+      .then(({ x, y }) => {
         if (activeTrigger !== trigger || request !== positionRequest) {
           return;
         }
         const scale = window.devicePixelRatio || 1;
         floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
-        floating.style.visibility = &quot;visible&quot;;
+        floating.style.visibility = "visible";
       })
-      .catch(() =&gt; {
-        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
           closeTooltip(false);
         }
       });
   };
-  const openTooltip = (trigger) =&gt; {
+  const openTooltip = (trigger) => {
     const content = getContent(trigger);
     if (!trigger.isConnected || content.length === 0) {
       return;
@@ -1222,16 +1215,16 @@ html&gt;body{padding:0}&lt;/style&gt;
     closeTooltip();
     const floating = getTooltip();
     floating.textContent = content;
-    floating.style.visibility = &quot;hidden&quot;;
-    floating.style.transform = &quot;translate(0, 0)&quot;;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
     document.body.appendChild(floating);
     activeTrigger = trigger;
     setDescribedBy(trigger, true);
-    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
       updatePosition(trigger, floating);
     });
   };
-  const requestOpen = (trigger, immediate = false) =&gt; {
+  const requestOpen = (trigger, immediate = false) => {
     if (
       getContent(trigger).length === 0 ||
       activeTrigger === trigger ||
@@ -1242,21 +1235,21 @@ html&gt;body{padding:0}&lt;/style&gt;
     clearOpenTimeout();
     pendingTrigger = trigger;
     const delay =
-      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
         ? 0
         : hoverDelay;
     if (delay === 0) {
       openTooltip(trigger);
       return;
     }
-    openTimeout = window.setTimeout(() =&gt; {
+    openTimeout = window.setTimeout(() => {
       openTimeout = null;
       pendingTrigger = null;
       openTooltip(trigger);
     }, delay);
   };
-  const handlePointerOpen = (event) =&gt; {
-    if (event.pointerType === &quot;touch&quot;) {
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
       return;
     }
     const trigger = getTrigger(event.target);
@@ -1265,7 +1258,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
     requestOpen(trigger);
   };
-  const handleLeave = (event) =&gt; {
+  const handleLeave = (event) => {
     const trigger = getTrigger(event.target);
     if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
       return;
@@ -1274,47 +1267,47 @@ html&gt;body{padding:0}&lt;/style&gt;
       closeTooltip();
     }
   };
-  const handleFocusIn = (event) =&gt; {
+  const handleFocusIn = (event) => {
     const trigger = getTrigger(event.target);
-    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+    if (trigger?.matches(":focus-visible")) {
       requestOpen(trigger, true);
     }
   };
-  const handleKeyDown = (event) =&gt; {
-    if (event.key === &quot;Escape&quot;) {
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
       closeTooltip();
     }
   };
-  const handleContextMenu = (event) =&gt; {
+  const handleContextMenu = (event) => {
     const trigger = getTrigger(event.target);
     if (activeTrigger === trigger || pendingTrigger === trigger) {
       closeTooltip();
     }
   };
-  const destroy = () =&gt; {
+  const destroy = () => {
     closeTooltip(false);
-    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
-    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
-    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
-    document.removeEventListener(&quot;focusout&quot;, handleLeave);
-    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
-    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
     tooltip = null;
   };
 
-  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
-  document.addEventListener(&quot;pointerout&quot;, handleLeave);
-  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
-  document.addEventListener(&quot;focusout&quot;, handleLeave);
-  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
-  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
-  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
 })();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
-  const initialize = () =&gt; {
+</script>
+<script id="codex-visualization-lucide" async src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js"></script>
+<script>
+(() => {
+  const initialize = () => {
     globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
   };
   if (globalThis.lucide != null) {
@@ -1322,13 +1315,10 @@ html&gt;body{padding:0}&lt;/style&gt;
     return;
   }
   document
-    .getElementById(&quot;codex-visualization-lucide&quot;)
-    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
 })();
-&lt;/script&gt;
+</script>
 
-&lt;/body&gt;
-&lt;/html&gt;
-"></iframe>
 </body>
 </html>
