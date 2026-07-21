@@ -886,6 +886,13 @@ body { min-height: 100%; }
     #stage-calendar-app .auth-status { min-height: 18px; color: var(--muted-foreground); font-size: 12px; }
     #stage-calendar-app .account { display: flex; align-items: center; gap: 8px; }
     #stage-calendar-app .account-name { color: var(--muted-foreground); font-size: 12px; }
+    #stage-calendar-app .group-switcher { display: flex; align-items: center; gap: 6px; }
+    #stage-calendar-app .group-switcher .form-select { width: auto; max-width: 150px; }
+    #stage-calendar-app .room-section { display: grid; gap: 10px; padding: 4px 0 16px; border-bottom: 1px solid var(--border); }
+    #stage-calendar-app .room-section:last-child { padding-bottom: 0; border-bottom: 0; }
+    #stage-calendar-app .room-section h3 { margin: 0; font-size: 15px; font-weight: 500; }
+    #stage-calendar-app .invite-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    #stage-calendar-app .invite-code { padding: 7px 9px; border-radius: 5px; background: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
     #stage-calendar-app [hidden] { display: none !important; }
     @media (max-width: 780px) {
       #stage-calendar-app { padding: 12px; }
@@ -911,6 +918,7 @@ body { min-height: 100%; }
       #stage-calendar-app .weekday { padding: 7px 2px; }
       #stage-calendar-app .day { min-height: 88px; }
       #stage-calendar-app .field-row { grid-template-columns: 1fr; }
+      #stage-calendar-app .group-switcher .form-select { max-width: 118px; }
     }
   </style>
 
@@ -933,6 +941,7 @@ body { min-height: 100%; }
       <div class="brand-copy"><strong>同场</strong><span>我们的观演档期</span></div>
     </div>
     <div class="top-actions">
+      <div class="group-switcher"><select class="form-select" id="stage-group-select" aria-label="切换小群"></select><button type="button" class="btn icon-btn" id="stage-rooms" aria-label="管理小群" data-tooltip="管理小群"><i data-lucide="users-round" aria-hidden="true"></i></button></div>
       <button type="button" class="btn" id="stage-share"><i data-lucide="share-2" aria-hidden="true"></i><span class="share-label">分享排期</span></button>
       <button type="button" class="btn btn-primary" id="stage-add"><i data-lucide="plus" aria-hidden="true"></i>添加场次</button>
       <div class="account"><span class="account-name" id="stage-account-name"></span><button type="button" class="btn icon-btn" id="stage-logout" aria-label="退出登录" data-tooltip="退出登录"><i data-lucide="log-out" aria-hidden="true"></i></button></div>
@@ -982,6 +991,14 @@ body { min-height: 100%; }
       <div class="dialog-foot"><button type="button" class="btn" id="stage-cancel">取消</button><button type="submit" class="btn btn-primary">保存场次</button></div>
     </form>
   </dialog>
+  <dialog id="stage-room-dialog" class="app-private">
+    <div class="dialog-head"><h2>管理小群</h2><button type="button" class="btn btn-ghost icon-btn" id="stage-room-close" aria-label="关闭"><i data-lucide="x" aria-hidden="true"></i></button></div>
+    <div class="dialog-body">
+      <section class="room-section"><h3 id="stage-current-room"></h3><div class="invite-row"><span class="invite-code" id="stage-invite-code"></span><button type="button" class="btn" id="stage-copy-code"><i data-lucide="copy" aria-hidden="true"></i>复制邀请码</button></div></section>
+      <form class="room-section" id="stage-join-room-form"><h3>加入其他小群</h3><label class="form-label">邀请码<input class="form-control" name="code" required placeholder="输入邀请码"></label><button type="submit" class="btn">加入小群</button><div class="auth-status" id="stage-room-join-status"></div></form>
+      <form class="room-section" id="stage-create-room-form"><h3>创建新小群</h3><label class="form-label">小群名称<input class="form-control" name="name" required maxlength="30" placeholder="例如：周末看剧搭子"></label><button type="submit" class="btn btn-primary">创建小群</button><div class="auth-status" id="stage-room-create-status"></div></form>
+    </div>
+  </dialog>
   <div class="toast" id="stage-toast" hidden></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
@@ -1004,9 +1021,12 @@ body { min-height: 100%; }
       const localDate = (date) => [date.getFullYear(), String(date.getMonth()+1).padStart(2,'0'), String(date.getDate()).padStart(2,'0')].join('-');
       let events = [];
       let members = [];
+      let groups = [];
       let session = null;
       let groupId = null;
       let realtime = null;
+      let editingId = null;
+      let currentNickname = '';
       let view = new Date(now.getFullYear(), now.getMonth(), 1);
       let selected = localDate(now);
       let memberFilter = '全部';
@@ -1044,15 +1064,16 @@ body { min-height: 100%; }
         $('#stage-details').innerHTML=dayEvents.map(e=>{
           const c=conflict(e), mm=mismatch(e);
           const attending=e.peopleIds.includes(session.user.id);
-          return `<article class="event-detail"><div class="event-kind"><i class="kind-dot" style="background:var(--viz-series-${typeSeries(e.type)})"></i>${typeMap[e.type]}</div><h3>${e.title}</h3>${e.tags.length?`<div class="format-tags">${e.tags.map(tag=>`<span class="format-tag">${formatMap[tag]||tag}</span>`).join('')}</div>`:''}<div class="meta"><span><i data-lucide="clock" aria-hidden="true"></i>${e.time}</span>${e.venue?`<span><i data-lucide="map-pin" aria-hidden="true"></i>${e.venue}</span>`:''}${e.note?`<span><i data-lucide="ticket" aria-hidden="true"></i>${e.note}</span>`:''}</div><div class="people">${e.people.map(p=>`<span class="person" aria-label="${p}">${p.slice(0,1)}</span>`).join('')}<span class="person-count">${e.people.length?e.people.join('、'):'还没有人加入'}</span></div>${c?`<div class="alert"><i data-lucide="triangle-alert" aria-hidden="true"></i><span>时间冲突：和「${c.title}」同一时间，${c.peopleIds.filter(p=>e.peopleIds.includes(p)).map(id=>members.find(m=>m.id===id)?.nickname||'群友').join('、')} 可能撞场</span></div>`:''}${!c&&mm?`<div class="alert"><i data-lucide="circle-alert" aria-hidden="true"></i><span>同剧不同场：群里还有 ${fmtDate(mm.date)} ${mm.time} 的票，请确认场次</span></div>`:''}<div class="event-actions">${attending?`<button type="button" class="btn" data-leave="${e.id}"><i data-lucide="user-minus" aria-hidden="true"></i>取消同行</button>`:`<button type="button" class="btn btn-primary" data-join="${e.id}"><i data-lucide="user-plus" aria-hidden="true"></i>我也看</button>`}<button type="button" class="btn" data-copy="${e.id}"><i data-lucide="copy-plus" aria-hidden="true"></i>添加同剧场次</button><button type="button" class="btn btn-ghost" data-delete="${e.id}"><i data-lucide="trash-2" aria-hidden="true"></i>删除</button></div></article>`;
+          return `<article class="event-detail"><div class="event-kind"><i class="kind-dot" style="background:var(--viz-series-${typeSeries(e.type)})"></i>${typeMap[e.type]}</div><h3>${e.title}</h3>${e.tags.length?`<div class="format-tags">${e.tags.map(tag=>`<span class="format-tag">${formatMap[tag]||tag}</span>`).join('')}</div>`:''}<div class="meta"><span><i data-lucide="clock" aria-hidden="true"></i>${e.time}</span>${e.venue?`<span><i data-lucide="map-pin" aria-hidden="true"></i>${e.venue}</span>`:''}${e.note?`<span><i data-lucide="ticket" aria-hidden="true"></i>${e.note}</span>`:''}</div><div class="people">${e.people.map(p=>`<span class="person" aria-label="${p}">${p.slice(0,1)}</span>`).join('')}<span class="person-count">${e.people.length?e.people.join('、'):'还没有人加入'}</span></div>${c?`<div class="alert"><i data-lucide="triangle-alert" aria-hidden="true"></i><span>时间冲突：和「${c.title}」同一时间，${c.peopleIds.filter(p=>e.peopleIds.includes(p)).map(id=>members.find(m=>m.id===id)?.nickname||'群友').join('、')} 可能撞场</span></div>`:''}${!c&&mm?`<div class="alert"><i data-lucide="circle-alert" aria-hidden="true"></i><span>同剧不同场：群里还有 ${fmtDate(mm.date)} ${mm.time} 的票，请确认场次</span></div>`:''}<div class="event-actions">${attending?`<button type="button" class="btn" data-leave="${e.id}"><i data-lucide="user-minus" aria-hidden="true"></i>取消同行</button>`:`<button type="button" class="btn btn-primary" data-join="${e.id}"><i data-lucide="user-plus" aria-hidden="true"></i>我也看</button>`}<button type="button" class="btn" data-edit="${e.id}"><i data-lucide="pencil" aria-hidden="true"></i>编辑</button><button type="button" class="btn" data-copy="${e.id}"><i data-lucide="copy-plus" aria-hidden="true"></i>添加同剧场次</button><button type="button" class="btn btn-ghost" data-delete="${e.id}"><i data-lucide="trash-2" aria-hidden="true"></i>删除</button></div></article>`;
         }).join('');
         $('#stage-details').querySelectorAll('[data-join]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('attendance').insert({performance_id:b.dataset.join,user_id:session.user.id});if(error)toast(error.message);else{await loadData();toast('已加入这一场');}}));
         $('#stage-details').querySelectorAll('[data-leave]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('attendance').delete().eq('performance_id',b.dataset.leave).eq('user_id',session.user.id);if(error)toast(error.message);else{await loadData();toast('已取消同行');}}));
-        $('#stage-details').querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>openDialog(events.find(e=>String(e.id)===b.dataset.copy))));
+        $('#stage-details').querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openDialog(events.find(e=>String(e.id)===b.dataset.edit),'edit')));
+        $('#stage-details').querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>openDialog(events.find(e=>String(e.id)===b.dataset.copy),'copy')));
         $('#stage-details').querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',async()=>{ const {error}=await db.from('performances').delete().eq('id',b.dataset.delete); if(error) toast(error.message); else toast('已删除场次'); }));
       }
       function render() { renderFilters(); renderCalendar(); renderDetails(); if(window.lucide) lucide.createIcons({attrs:{width:16,height:16}}); }
-      function openDialog(template=null){ const form=$('#stage-form'); form.reset(); $('#stage-dialog-title').textContent=template?'添加同剧场次':'添加观演场次'; form.elements.title.value=template?.title||''; form.elements.type.value=template?.type||'other'; form.elements.date.value=template?.date||selected; form.elements.time.value=template?'':'19:30'; form.elements.venue.value=template?.venue||''; form.querySelectorAll('[name="format_tags"]').forEach(input=>input.checked=Boolean(template?.tags?.includes(input.value))); $('#stage-member-checks').innerHTML=members.map(m=>`<label class="form-check"><input class="form-check-input" type="checkbox" name="people" value="${m.id}" ${m.id===session.user.id?'checked':''}><span class="form-check-label">${m.nickname}</span></label>`).join(''); $('#stage-dialog').showModal(); }
+      function openDialog(template=null,mode='new'){ const form=$('#stage-form'); form.reset(); editingId=mode==='edit'?template.id:null; $('#stage-dialog-title').textContent=mode==='edit'?'编辑场次':mode==='copy'?'添加同剧场次':'添加观演场次'; form.elements.title.value=template?.title||''; form.elements.type.value=template?.type||'other'; form.elements.date.value=template?.date||selected; form.elements.time.value=mode==='copy'?'':template?.time||'19:30'; form.elements.venue.value=template?.venue||''; form.elements.note.value=mode==='edit'?template?.note||'':''; form.querySelectorAll('[name="format_tags"]').forEach(input=>input.checked=Boolean(template?.tags?.includes(input.value))); $('#stage-member-checks').innerHTML=members.map(m=>{const checked=mode==='edit'?template.peopleIds.includes(m.id):m.id===session.user.id;return `<label class="form-check"><input class="form-check-input" type="checkbox" name="people" value="${m.id}" ${checked?'checked':''}><span class="form-check-label">${m.nickname}</span></label>`}).join(''); $('#stage-dialog').showModal(); }
       async function loadData() {
         const [{data:memberRows,error:memberError},{data:eventRows,error:eventError}] = await Promise.all([
           db.from('group_members').select('user_id, profiles!group_members_user_id_fkey(nickname,avatar_url)').eq('group_id',groupId),
@@ -1063,24 +1084,44 @@ body { min-height: 100%; }
         events=(eventRows||[]).map(r=>({id:r.id,title:r.title,type:r.type,tags:r.format_tags||[],date:r.event_date,time:String(r.start_time).slice(0,5),venue:r.venue,note:r.note||'',peopleIds:(r.attendance||[]).map(a=>a.user_id),people:(r.attendance||[]).map(a=>a.profiles?.nickname||'群友')}));
         render();
       }
-      async function enterApp() {
-        const {data,error}=await db.from('group_members').select('group_id, profiles!group_members_user_id_fkey(nickname)').eq('user_id',session.user.id).limit(1).maybeSingle();
-        if(error){ $('#stage-join-status').textContent=error.message; return; }
-        if(!data){ $('#stage-auth').hidden=false; $('#stage-join-view').hidden=false; return; }
-        groupId=data.group_id; $('#stage-account-name').textContent=data.profiles?.nickname||session.user.email;
-        $('#stage-auth').hidden=true; root.querySelectorAll('.app-private').forEach(el=>el.hidden=false);
-        await loadData();
+      function renderGroups() {
+        $('#stage-group-select').innerHTML=groups.map(g=>`<option value="${g.id}" ${g.id===groupId?'selected':''}>${g.name}</option>`).join('');
+        const current=groups.find(g=>g.id===groupId);
+        $('#stage-current-room').textContent=current?.name||'当前小群';
+        $('#stage-invite-code').textContent=current?.invite_code||'';
+      }
+      async function subscribeGroup() {
         if(realtime) await db.removeChannel(realtime);
         realtime=db.channel(`group-${groupId}`).on('postgres_changes',{event:'*',schema:'public',table:'performances',filter:`group_id=eq.${groupId}`},loadData).on('postgres_changes',{event:'*',schema:'public',table:'attendance'},loadData).subscribe();
       }
-      $('#stage-add').addEventListener('click',openDialog);
+      async function switchGroup(nextGroupId) {
+        groupId=nextGroupId; memberFilter='全部'; localStorage.setItem('tongchang-group-id',groupId); renderGroups(); await loadData(); await subscribeGroup();
+      }
+      async function enterApp() {
+        const {data,error}=await db.from('group_members').select('group_id, groups!group_members_group_id_fkey(id,name,invite_code), profiles!group_members_user_id_fkey(nickname)').eq('user_id',session.user.id);
+        if(error){ $('#stage-join-status').textContent=error.message; return; }
+        if(!data?.length){ $('#stage-auth').hidden=false; $('#stage-join-view').hidden=false; return; }
+        groups=data.map(row=>row.groups).filter(Boolean); currentNickname=data[0].profiles?.nickname||'群友';
+        const preferred=groupId||localStorage.getItem('tongchang-group-id'); groupId=groups.some(g=>g.id===preferred)?preferred:groups[0].id;
+        $('#stage-account-name').textContent=currentNickname; renderGroups();
+        $('#stage-auth').hidden=true; root.querySelectorAll('.app-private').forEach(el=>el.hidden=false);
+        await loadData();
+        await subscribeGroup();
+      }
+      $('#stage-add').addEventListener('click',()=>openDialog());
       $('#stage-close').addEventListener('click',()=>$('#stage-dialog').close());
       $('#stage-cancel').addEventListener('click',()=>$('#stage-dialog').close());
-      $('#stage-form').addEventListener('submit',async(ev)=>{ ev.preventDefault(); const fd=new FormData(ev.currentTarget); const people=fd.getAll('people'); if(!people.length){toast('请至少选择一位同行人');return;} const {data:performance,error}=await db.from('performances').insert({group_id:groupId,title:fd.get('title'),type:fd.get('type'),format_tags:fd.getAll('format_tags'),event_date:fd.get('date'),start_time:fd.get('time'),venue:fd.get('venue'),note:fd.get('note'),created_by:session.user.id}).select('id').single(); if(error){toast(error.message);return;} const {error:attendError}=await db.from('attendance').insert(people.map(user_id=>({performance_id:performance.id,user_id}))); if(attendError){toast(attendError.message);return;} selected=fd.get('date'); const d=new Date(selected+'T00:00:00'); view=new Date(d.getFullYear(),d.getMonth(),1); $('#stage-dialog').close(); await loadData(); toast('场次已加入排期'); });
+      $('#stage-form').addEventListener('submit',async(ev)=>{ ev.preventDefault(); const fd=new FormData(ev.currentTarget); const people=fd.getAll('people'); const payload={group_id:groupId,title:fd.get('title'),type:fd.get('type'),format_tags:fd.getAll('format_tags'),event_date:fd.get('date'),start_time:fd.get('time'),venue:fd.get('venue')||null,note:fd.get('note')||null}; let performanceId=editingId; if(editingId){const {error}=await db.from('performances').update(payload).eq('id',editingId);if(error){toast(error.message);return;}const previous=events.find(e=>String(e.id)===String(editingId))?.peopleIds||[];const toAdd=people.filter(id=>!previous.includes(id));const toRemove=previous.filter(id=>!people.includes(id));if(toRemove.length){const {error}=await db.from('attendance').delete().eq('performance_id',editingId).in('user_id',toRemove);if(error){toast(error.message);return;}}if(toAdd.length){const {error}=await db.from('attendance').insert(toAdd.map(user_id=>({performance_id:editingId,user_id})));if(error){toast(error.message);return;}}}else{const {data:performance,error}=await db.from('performances').insert({...payload,created_by:session.user.id}).select('id').single();if(error){toast(error.message);return;}performanceId=performance.id;if(people.length){const {error}=await db.from('attendance').insert(people.map(user_id=>({performance_id:performanceId,user_id})));if(error){toast(error.message);return;}}} selected=fd.get('date');const d=new Date(selected+'T00:00:00');view=new Date(d.getFullYear(),d.getMonth(),1);editingId=null;$('#stage-dialog').close();await loadData();toast('场次已保存'); });
       $('#stage-prev').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();});
       $('#stage-next').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();});
       $('#stage-today').addEventListener('click',()=>{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
       $('#stage-share').addEventListener('click',async()=>{ const url=location.href.split('#')[0]; try{await navigator.clipboard.writeText(url);toast('群日历网址已复制');}catch(_){prompt('复制群日历网址',url);} });
+      $('#stage-group-select').addEventListener('change',ev=>switchGroup(ev.target.value));
+      $('#stage-rooms').addEventListener('click',()=>{renderGroups();$('#stage-room-join-status').textContent='';$('#stage-room-create-status').textContent='';$('#stage-room-dialog').showModal();});
+      $('#stage-room-close').addEventListener('click',()=>$('#stage-room-dialog').close());
+      $('#stage-copy-code').addEventListener('click',async()=>{const code=$('#stage-invite-code').textContent;try{await navigator.clipboard.writeText(code);toast('邀请码已复制');}catch(_){prompt('复制邀请码',code);}});
+      $('#stage-join-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const code=new FormData(ev.currentTarget).get('code').trim().toUpperCase();const {data,error}=await db.rpc('join_group_by_code',{invite:code,display_name:currentNickname});if(error){$('#stage-room-join-status').textContent=error.message;return;}groupId=data;await enterApp();$('#stage-room-dialog').close();toast('已加入新的小群');});
+      $('#stage-create-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const name=new FormData(ev.currentTarget).get('name').trim();const {data,error}=await db.rpc('create_group',{group_name:name});if(error){$('#stage-room-create-status').textContent=error.message;return;}groupId=data.id;await enterApp();$('#stage-room-dialog').close();toast(`小群已创建，邀请码 ${data.invite_code}`);});
       $('#stage-logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload();});
       $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);$('#stage-join-status').textContent='正在加入…';const {data,error}=await db.rpc('join_group_by_code',{invite:fd.get('code').trim().toUpperCase(),display_name:fd.get('nickname').trim()});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=data;await enterApp();});
       const {data:{session:initialSession}}=await db.auth.getSession(); session=initialSession;
