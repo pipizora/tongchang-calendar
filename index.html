@@ -925,12 +925,12 @@ body { min-height: 100%; }
 
   <section class="auth-shell card" id="stage-auth">
     <div id="stage-join-view">
-      <h1>加入看剧群</h1>
-      <p>设置群友能看到的昵称，再输入群邀请码。</p>
+      <h1>开始使用同场</h1>
+      <p>设置昵称即可创建自己的共享日历，也可以加入朋友的日历。</p>
       <form class="auth-form" id="stage-join-form">
-        <label class="form-label">昵称<input class="form-control" name="nickname" required maxlength="20" placeholder="例如：小满"><span class="text-small">同一小群内昵称不可重复</span></label>
-        <label class="form-label">邀请码<input class="form-control" name="code" required value="TONGCHANG"></label>
-        <button type="submit" class="btn btn-primary btn-block">加入群组</button>
+        <label class="form-label">昵称<input class="form-control" name="nickname" required maxlength="20" placeholder="例如：小满"><span class="text-small">昵称在整个网站内不可重复，首批开放 100 个名额</span></label>
+        <label class="form-label">朋友的邀请码（选填）<input class="form-control" name="code" autocomplete="off" placeholder="有邀请码就填，没有可以留空"><span class="text-small">留空会创建新的共享日历，并由你邀请朋友</span></label>
+        <button type="submit" class="btn btn-primary btn-block">开始使用</button>
         <div class="auth-status" id="stage-join-status"></div>
       </form>
     </div>
@@ -997,7 +997,7 @@ body { min-height: 100%; }
     <div class="dialog-head"><h2>管理小群</h2><button type="button" class="btn btn-ghost icon-btn" id="stage-room-close" aria-label="关闭"><i data-lucide="x" aria-hidden="true"></i></button></div>
     <div class="dialog-body">
       <section class="room-section"><h3 id="stage-current-room"></h3><div class="invite-row"><span class="invite-code" id="stage-invite-code"></span><button type="button" class="btn" id="stage-copy-code"><i data-lucide="copy" aria-hidden="true"></i>复制邀请码</button></div></section>
-      <form class="room-section" id="stage-join-room-form"><h3>加入其他小群</h3><label class="form-label">邀请码<input class="form-control" name="code" required placeholder="输入邀请码"></label><button type="submit" class="btn">加入小群</button><div class="auth-status" id="stage-room-join-status"></div></form>
+      <form class="room-section" id="stage-join-room-form"><h3>加入其他小群</h3><label class="form-label">共享日历邀请码<input class="form-control" name="code" required autocomplete="off" placeholder="输入群主分享的邀请码"></label><button type="submit" class="btn">加入小群</button><div class="auth-status" id="stage-room-join-status"></div></form>
       <form class="room-section" id="stage-create-room-form"><h3>创建新小群</h3><label class="form-label">小群名称<input class="form-control" name="name" required maxlength="30" placeholder="例如：周末看剧搭子"></label><button type="submit" class="btn btn-primary">创建小群</button><div class="auth-status" id="stage-room-create-status"></div></form>
     </div>
   </dialog>
@@ -1125,7 +1125,7 @@ body { min-height: 100%; }
       $('#stage-join-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const code=new FormData(ev.currentTarget).get('code').trim().toUpperCase();const {data,error}=await db.rpc('join_group_by_code',{invite:code,display_name:currentNickname});if(error){$('#stage-room-join-status').textContent=error.message;return;}groupId=data;await enterApp();$('#stage-room-dialog').close();toast('已加入新的小群');});
       $('#stage-create-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const name=new FormData(ev.currentTarget).get('name').trim();const {data,error}=await db.rpc('create_group',{group_name:name});if(error){$('#stage-room-create-status').textContent=error.message;return;}groupId=data.id;await enterApp();$('#stage-room-dialog').close();toast(`小群已创建，邀请码 ${data.invite_code}`);});
       $('#stage-logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload();});
-      $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);$('#stage-join-status').textContent='正在加入…';const {data,error}=await db.rpc('join_group_by_code',{invite:fd.get('code').trim().toUpperCase(),display_name:fd.get('nickname').trim()});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=data;await enterApp();});
+      $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);const nickname=fd.get('nickname').trim();const code=fd.get('code').trim().toUpperCase();$('#stage-join-status').textContent=code?'正在加入朋友的日历…':'正在创建你的共享日历…';const {data,error}=code?await db.rpc('join_group_by_code',{invite:code,display_name:nickname}):await db.rpc('create_first_group',{display_name:nickname});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=code?data:data.id;await enterApp();if(!code)toast(`共享日历已创建，邀请码 ${data.invite_code}`);});
       const {data:{session:initialSession}}=await db.auth.getSession(); session=initialSession;
       db.auth.onAuthStateChange(async(_event,nextSession)=>{if(nextSession&&!session){session=nextSession;await enterApp();}});
       if(!session){const {data,error}=await db.auth.signInAnonymously();if(error){$('#stage-join-status').textContent='请先在 Supabase 开启匿名登录：'+error.message;}else{session=data.session;await enterApp();}}else{await enterApp();}
