@@ -869,14 +869,15 @@ body { min-height: 100%; }
     #stage-calendar-app .legend-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--viz-series-1); }
     #stage-calendar-app .legend-dot.play { background: var(--viz-series-2); }
     #stage-calendar-app .legend-dot.dance { background: var(--viz-series-3); }
-    #stage-calendar-app dialog { width: min(520px, calc(100% - 28px)); max-height: 88%; padding: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--card-foreground); }
-    #stage-calendar-app dialog::backdrop { background: color-mix(in srgb, var(--foreground) 32%, transparent); }
+    #stage-calendar-app dialog { width: min(520px, calc(100% - 28px)); max-height: 88%; padding: 0; border: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent); border-radius: 8px; background: var(--popover); color: var(--popover-foreground); box-shadow: 0 20px 50px color-mix(in srgb, var(--foreground) 24%, transparent); }
+    #stage-calendar-app dialog::backdrop { background: color-mix(in srgb, var(--foreground) 52%, transparent); }
     #stage-calendar-app .dialog-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--border); }
     #stage-calendar-app .dialog-head h2 { font-size: 18px; font-weight: 500; margin: 0; }
     #stage-calendar-app .dialog-body { padding: 18px 20px; display: grid; gap: 14px; }
     #stage-calendar-app .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    #stage-calendar-app .form-label { display: grid; gap: 6px; color: var(--muted-foreground); font-size: 12px; }
-    #stage-calendar-app .form-control, #stage-calendar-app .form-select { width: 100%; color: var(--foreground); background: var(--background); border: 1px solid var(--input); border-radius: 6px; padding: 9px 10px; }
+    #stage-calendar-app .form-label { display: grid; gap: 6px; color: var(--foreground); font-size: 12px; }
+    #stage-calendar-app .form-control, #stage-calendar-app .form-select { width: 100%; color: var(--foreground); background-color: var(--secondary); border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent); border-radius: 6px; padding: 9px 10px; }
+    #stage-calendar-app dialog .form-check-input { width: 16px; height: 16px; border-color: color-mix(in srgb, var(--foreground) 28%, transparent); }
     #stage-calendar-app .checks { display: flex; gap: 12px; flex-wrap: wrap; padding: 5px 0; }
     #stage-calendar-app .dialog-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--border); }
     #stage-calendar-app .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 9px 14px; border-radius: 6px; color: var(--primary-foreground); background: var(--primary); z-index: 20; box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 18%, transparent); }
