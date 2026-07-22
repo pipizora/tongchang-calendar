@@ -1030,7 +1030,9 @@ body { min-height: 100%; }
       let realtime = null;
       let editingId = null;
       let currentNickname = '';
-      let pendingInvite = (new URLSearchParams(location.search).get('invite')||'').trim().toUpperCase();
+      const queryInvite = new URLSearchParams(location.search).get('invite');
+      const hashInvite = new URLSearchParams(location.hash.replace(/^#/,'')).get('invite');
+      let pendingInvite = (queryInvite||hashInvite||'').trim().toUpperCase();
       let view = new Date(now.getFullYear(), now.getMonth(), 1);
       let selected = localDate(now);
       let memberFilter = '全部';
@@ -1039,7 +1041,7 @@ body { min-height: 100%; }
       const conflict = (event) => events.find(e => e.id !== event.id && e.date === event.date && e.time === event.time && e.people.some(p => event.people.includes(p)));
       const mismatch = (event) => events.find(e => e.id !== event.id && e.title === event.title && (e.date !== event.date || e.time !== event.time));
       const toast = (msg) => { const el = $('#stage-toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2200); };
-      const clearInviteUrl = () => history.replaceState({},'',location.pathname+location.hash);
+      const clearInviteUrl = () => history.replaceState({},'',location.pathname);
       const eventPeople = (people) => `<span class="event-people" aria-label="同行：${people.join('、')}">${people.slice(0,3).map(p=>`<span class="event-avatar">${p.slice(0,1)}</span>`).join('')}${people.length>3?`<span class="event-avatar-more">+${people.length-3}</span>`:''}</span>`;
 
       function renderFilters() {
@@ -1122,7 +1124,7 @@ body { min-height: 100%; }
       $('#stage-prev').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();});
       $('#stage-next').addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render();});
       $('#stage-today').addEventListener('click',()=>{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
-      $('#stage-share').addEventListener('click',async()=>{const current=groups.find(g=>g.id===groupId);const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('invite',current.invite_code);try{await navigator.clipboard.writeText(url.toString());toast('带邀请码的群日历链接已复制');}catch(_){prompt('复制群日历链接',url.toString());}});
+      $('#stage-share').addEventListener('click',async()=>{const current=groups.find(g=>g.id===groupId);const url=new URL(location.href);url.search='';url.hash=`invite=${encodeURIComponent(current.invite_code)}`;try{await navigator.clipboard.writeText(url.toString());toast('带邀请码的群日历链接已复制');}catch(_){prompt('复制群日历链接',url.toString());}});
       $('#stage-group-select').addEventListener('change',ev=>switchGroup(ev.target.value));
       $('#stage-rooms').addEventListener('click',()=>{renderGroups();$('#stage-room-join-status').textContent='';$('#stage-room-create-status').textContent='';$('#stage-room-dialog').showModal();});
       $('#stage-room-close').addEventListener('click',()=>$('#stage-room-dialog').close());
