@@ -825,7 +825,7 @@ body { min-height: 100%; }
     #stage-calendar-app .filter-chip { border: 1px solid var(--border); background: transparent; color: var(--foreground); border-radius: 999px; padding: 6px 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
     #stage-calendar-app .filter-chip[aria-pressed="true"] { color: var(--primary-foreground); background: var(--primary); border-color: var(--primary); }
     #stage-calendar-app .avatar-dot { width: 18px; height: 18px; border-radius: 50%; display: inline-grid; place-items: center; background: color-mix(in srgb, var(--viz-series-2) 22%, var(--card)); font-size: 10px; color: var(--foreground); }
-    #stage-calendar-app .calendar { border-top: 1px solid var(--border); border-left: 1px solid var(--border); display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    #stage-calendar-app .calendar { border-top: 1px solid var(--border); border-left: 1px solid var(--border); display: grid; grid-template-columns: repeat(5, minmax(0, 0.88fr)) repeat(2, minmax(0, 1.3fr)); }
     #stage-calendar-app .weekday { min-height: 36px; padding: 9px 8px; color: var(--muted-foreground); font-size: 12px; text-align: center; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     #stage-calendar-app .day { appearance: none; text-align: left; color: var(--foreground); background: transparent; border: 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); min-height: 126px; padding: 8px; cursor: pointer; overflow: hidden; }
     #stage-calendar-app .day:hover { background: color-mix(in srgb, var(--accent) 50%, transparent); }
@@ -899,6 +899,7 @@ body { min-height: 100%; }
     @media (max-width: 780px) {
       #stage-calendar-app { padding: 12px; }
       #stage-calendar-app .overview { grid-template-columns: 1fr; }
+      #stage-calendar-app .calendar { grid-template-columns: repeat(7, minmax(0, 1fr)); }
       #stage-calendar-app .side { position: static; }
       #stage-calendar-app .day { min-height: 96px; padding: 5px; }
       #stage-calendar-app .event-pill { padding: 4px; border-left-width: 2px; }
@@ -1058,7 +1059,7 @@ body { min-height: 100%; }
         for(let i=0;i<42;i++) {
           const d=new Date(start); d.setDate(start.getDate()+i); const iso=localDate(d);
           const dayEvents=visible().filter(e=>e.date===iso); const cls=['day', d.getMonth()!==m?'is-outside':'', iso===selected?'is-selected':'', iso===localDate(now)?'is-today':''].filter(Boolean).join(' ');
-          html += `<button type="button" class="${cls}" data-date="${iso}" role="gridcell" aria-label="${fmtDate(iso)}，${dayEvents.length}场演出"><span class="day-number">${d.getDate()}</span>${dayEvents.slice(0,2).map(e=>`<span class="event-pill ${typeClass(e.type)}"><span class="event-main"><span class="event-time">${e.time}</span><span class="event-title">${e.title}</span></span><span class="event-venue">${e.isTentative?'暂定 · ':''}${typeMap[e.type]}${e.tags.length?` · ${formatMap[e.tags[0]]}`:''}${e.venue?` · ${e.venue}`:''}</span>${eventPeople(e.people)}</span>`).join('')}${dayEvents.length>2?`<span class="more">还有 ${dayEvents.length-2} 场</span>`:''}</button>`;
+          html += `<button type="button" class="${cls}" data-date="${iso}" role="gridcell" aria-label="${fmtDate(iso)}，${dayEvents.length}场演出"><span class="day-number">${d.getDate()}</span>${dayEvents.map(e=>`<span class="event-pill ${typeClass(e.type)}"><span class="event-main"><span class="event-time">${e.time}</span><span class="event-title">${e.title}</span></span><span class="event-venue">${e.isTentative?'暂定 · ':''}${typeMap[e.type]}${e.tags.length?` · ${formatMap[e.tags[0]]}`:''}${e.venue?` · ${e.venue}`:''}</span>${eventPeople(e.people)}</span>`).join('')}</button>`;
         }
         $('#stage-calendar').innerHTML=html;
         $('#stage-calendar').querySelectorAll('.day').forEach(b=>b.addEventListener('click',()=>{ selected=b.dataset.date; const d=new Date(selected+'T00:00:00'); if(d.getMonth()!==view.getMonth()){view=new Date(d.getFullYear(),d.getMonth(),1);} render(); }));
