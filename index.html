@@ -895,6 +895,12 @@ body { min-height: 100%; }
     #stage-calendar-app .room-section h3 { margin: 0; font-size: 15px; font-weight: 500; }
     #stage-calendar-app .invite-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     #stage-calendar-app .invite-code { padding: 7px 9px; border-radius: 5px; background: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    #stage-calendar-app .member-list { display: grid; gap: 8px; }
+    #stage-calendar-app .member-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    #stage-calendar-app .member-row:last-child { border-bottom: 0; }
+    #stage-calendar-app .member-name { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    #stage-calendar-app .member-role { color: var(--muted-foreground); font-size: 11px; }
+    #stage-calendar-app .merge-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     #stage-calendar-app [hidden] { display: none !important; }
     @media (max-width: 780px) {
       #stage-calendar-app { padding: 12px; }
@@ -921,6 +927,7 @@ body { min-height: 100%; }
       #stage-calendar-app .weekday { padding: 7px 2px; }
       #stage-calendar-app .day { min-height: 88px; }
       #stage-calendar-app .field-row { grid-template-columns: 1fr; }
+      #stage-calendar-app .merge-fields { grid-template-columns: 1fr; }
       #stage-calendar-app .group-switcher .form-select { max-width: 118px; }
     }
   </style>
@@ -999,6 +1006,8 @@ body { min-height: 100%; }
     <div class="dialog-head"><h2>管理小群</h2><button type="button" class="btn btn-ghost icon-btn" id="stage-room-close" aria-label="关闭"><i data-lucide="x" aria-hidden="true"></i></button></div>
     <div class="dialog-body">
       <section class="room-section"><h3 id="stage-current-room"></h3><div class="invite-row"><span class="invite-code" id="stage-invite-code"></span><button type="button" class="btn" id="stage-copy-code"><i data-lucide="copy" aria-hidden="true"></i>复制邀请码</button></div></section>
+      <section class="room-section"><h3>群成员</h3><div class="member-list" id="stage-member-list"></div></section>
+      <form class="room-section" id="stage-merge-member-form" hidden><h3>合并重复昵称</h3><div class="merge-fields"><label class="form-label">要去掉的昵称<select class="form-select" name="source_user" required></select></label><label class="form-label">要保留的昵称<select class="form-select" name="keep_user" required></select></label></div><span class="text-small text-muted">旧昵称的场次和同行记录会转移到保留昵称。</span><button type="submit" class="btn">确认合并</button><div class="auth-status" id="stage-merge-status"></div></form>
       <form class="room-section" id="stage-join-room-form"><h3>加入其他小群</h3><label class="form-label">共享日历邀请码<input class="form-control" name="code" required autocomplete="off" placeholder="输入群主分享的邀请码"></label><button type="submit" class="btn">加入小群</button><div class="auth-status" id="stage-room-join-status"></div></form>
       <form class="room-section" id="stage-create-room-form"><h3>创建新小群</h3><label class="form-label">小群名称<input class="form-control" name="name" required maxlength="30" placeholder="例如：周末看剧搭子"></label><button type="submit" class="btn btn-primary">创建小群</button><div class="auth-status" id="stage-room-create-status"></div></form>
     </div>
@@ -1031,6 +1040,7 @@ body { min-height: 100%; }
       let realtime = null;
       let editingId = null;
       let currentNickname = '';
+      let isGroupOwner = false;
       const queryInvite = new URLSearchParams(location.search).get('invite');
       const hashInvite = new URLSearchParams(location.hash.replace(/^#/,'')).get('invite');
       let pendingInvite = (queryInvite||hashInvite||'').trim().toUpperCase();
@@ -1084,11 +1094,12 @@ body { min-height: 100%; }
       function openDialog(template=null,mode='new'){ const form=$('#stage-form'); form.reset(); editingId=mode==='edit'?template.id:null; $('#stage-dialog-title').textContent=mode==='edit'?'编辑场次':mode==='copy'?'添加同剧场次':'添加观演场次'; form.elements.title.value=template?.title||''; form.elements.type.value=template?.type||'other'; form.elements.date.value=template?.date||selected; form.elements.time.value=mode==='copy'?'':template?.time||'19:30'; form.elements.venue.value=template?.venue||''; form.elements.is_tentative.checked=Boolean(template?.isTentative); form.elements.note.value=mode==='edit'?template?.note||'':''; form.querySelectorAll('[name="format_tags"]').forEach(input=>input.checked=Boolean(template?.tags?.includes(input.value))); $('#stage-member-checks').innerHTML=members.map(m=>{const checked=mode==='edit'?template.people.includes(m.nickname):m.nickname===currentNickname;return `<label class="form-check"><input class="form-check-input" type="checkbox" name="people" value="${m.id}" ${checked?'checked':''}><span class="form-check-label">${m.nickname}</span></label>`}).join(''); $('#stage-dialog').showModal(); }
       async function loadData() {
         const [{data:memberRows,error:memberError},{data:eventRows,error:eventError}] = await Promise.all([
-          db.from('group_members').select('user_id, profiles!group_members_user_id_fkey(nickname,avatar_url)').eq('group_id',groupId),
+          db.from('group_members').select('user_id,role,profiles!group_members_user_id_fkey(nickname,avatar_url)').eq('group_id',groupId),
           db.from('performances').select('id,title,type,format_tags,event_date,start_time,venue,note,is_tentative,attendance(user_id,seat_note,profiles!attendance_user_id_fkey(nickname,avatar_url))').eq('group_id',groupId).order('event_date').order('start_time')
         ]);
         if(memberError||eventError){ toast((memberError||eventError).message); return; }
-        const memberMap=new Map();(memberRows||[]).forEach(r=>{const nickname=(r.profiles?.nickname||'群友').trim();const existing=memberMap.get(nickname);if(existing){existing.userIds.push(r.user_id);if(r.user_id===session.user.id)existing.id=r.user_id;}else{memberMap.set(nickname,{id:r.user_id,nickname,avatar_url:r.profiles?.avatar_url||'',userIds:[r.user_id]});}});members=[...memberMap.values()];
+        const memberMap=new Map();(memberRows||[]).forEach(r=>{const nickname=(r.profiles?.nickname||'群友').trim();const existing=memberMap.get(nickname);if(existing){existing.userIds.push(r.user_id);if(r.user_id===session.user.id)existing.id=r.user_id;if(r.role==='owner')existing.role='owner';}else{memberMap.set(nickname,{id:r.user_id,nickname,avatar_url:r.profiles?.avatar_url||'',role:r.role||'member',userIds:[r.user_id]});}});members=[...memberMap.values()];
+        isGroupOwner=(memberRows||[]).some(r=>r.user_id===session.user.id&&r.role==='owner');
         events=(eventRows||[]).map(r=>{const peopleRows=(r.attendance||[]).map(a=>({userId:a.user_id,nickname:(a.profiles?.nickname||'群友').trim()}));return {id:r.id,title:r.title,type:r.type,tags:r.format_tags||[],date:r.event_date,time:String(r.start_time).slice(0,5),venue:r.venue,note:r.note||'',isTentative:Boolean(r.is_tentative),peopleIds:peopleRows.map(p=>p.userId),people:[...new Set(peopleRows.map(p=>p.nickname))],peopleRows};});
         render();
       }
@@ -1097,6 +1108,16 @@ body { min-height: 100%; }
         const current=groups.find(g=>g.id===groupId);
         $('#stage-current-room').textContent=current?.name||'当前小群';
         $('#stage-invite-code').textContent=current?.invite_code||'';
+      }
+      function renderMemberManagement() {
+        $('#stage-member-list').innerHTML=members.map(m=>`<div class="member-row"><span class="member-name"><span class="avatar-dot">${m.nickname.slice(0,1)}</span><span>${m.nickname}</span></span><span class="member-role">${m.role==='owner'?'群主':'成员'}</span></div>`).join('');
+        const form=$('#stage-merge-member-form');
+        form.hidden=!isGroupOwner;
+        if(!isGroupOwner)return;
+        const removable=members.filter(m=>m.role!=='owner');
+        form.elements.source_user.innerHTML=removable.length?removable.map(m=>`<option value="${m.id}">${m.nickname}</option>`).join(''):'<option value="">暂无可合并成员</option>';
+        form.elements.keep_user.innerHTML=members.map(m=>`<option value="${m.id}">${m.nickname}</option>`).join('');
+        form.querySelector('button[type="submit"]').disabled=!removable.length;
       }
       async function subscribeGroup() {
         if(realtime) await db.removeChannel(realtime);
@@ -1127,11 +1148,12 @@ body { min-height: 100%; }
       $('#stage-today').addEventListener('click',()=>{view=new Date(now.getFullYear(),now.getMonth(),1);selected=localDate(now);render();});
       $('#stage-share').addEventListener('click',async()=>{const current=groups.find(g=>g.id===groupId);const url=new URL(location.href);url.search='';url.hash=`invite=${encodeURIComponent(current.invite_code)}`;try{await navigator.clipboard.writeText(url.toString());toast('带邀请码的群日历链接已复制');}catch(_){prompt('复制群日历链接',url.toString());}});
       $('#stage-group-select').addEventListener('change',ev=>switchGroup(ev.target.value));
-      $('#stage-rooms').addEventListener('click',()=>{renderGroups();$('#stage-room-join-status').textContent='';$('#stage-room-create-status').textContent='';$('#stage-room-dialog').showModal();});
+      $('#stage-rooms').addEventListener('click',()=>{renderGroups();renderMemberManagement();$('#stage-room-join-status').textContent='';$('#stage-room-create-status').textContent='';$('#stage-merge-status').textContent='';$('#stage-room-dialog').showModal();});
       $('#stage-room-close').addEventListener('click',()=>$('#stage-room-dialog').close());
       $('#stage-copy-code').addEventListener('click',async()=>{const code=$('#stage-invite-code').textContent;try{await navigator.clipboard.writeText(code);toast('邀请码已复制');}catch(_){prompt('复制邀请码',code);}});
       $('#stage-join-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const code=new FormData(ev.currentTarget).get('code').trim().toUpperCase();const {data,error}=await db.rpc('join_group_by_code',{invite:code,display_name:currentNickname});if(error){$('#stage-room-join-status').textContent=error.message;return;}groupId=data;await enterApp();$('#stage-room-dialog').close();toast('已加入新的小群');});
       $('#stage-create-room-form').addEventListener('submit',async ev=>{ev.preventDefault();const name=new FormData(ev.currentTarget).get('name').trim();const {data,error}=await db.rpc('create_group',{group_name:name});if(error){$('#stage-room-create-status').textContent=error.message;return;}groupId=data.id;await enterApp();$('#stage-room-dialog').close();toast(`小群已创建，邀请码 ${data.invite_code}`);});
+      $('#stage-merge-member-form').addEventListener('submit',async ev=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);const source=members.find(m=>m.id===fd.get('source_user'));const keep=members.find(m=>m.id===fd.get('keep_user'));if(!source||!keep){$('#stage-merge-status').textContent='请选择两个昵称';return;}if(source.id===keep.id){$('#stage-merge-status').textContent='不能把同一个昵称合并给自己';return;}if(!confirm(`确定去掉“${source.nickname}”，并把她的记录合并到“${keep.nickname}”吗？`))return;$('#stage-merge-status').textContent='正在合并…';const {error}=await db.rpc('merge_group_member',{target_group:groupId,source_user:source.id,keep_user:keep.id});if(error){$('#stage-merge-status').textContent=error.message;return;}await loadData();renderMemberManagement();$('#stage-merge-status').textContent='';toast(`已保留“${keep.nickname}”，并合并“${source.nickname}”的记录`);});
       $('#stage-logout').addEventListener('click',async()=>{await db.auth.signOut();location.reload();});
       $('#stage-join-form').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.currentTarget);const nickname=fd.get('nickname').trim();const code=fd.get('code').trim().toUpperCase();$('#stage-join-status').textContent=code?'正在加入朋友的日历…':'正在创建你的共享日历…';const {data,error}=code?await db.rpc('join_group_by_code',{invite:code,display_name:nickname}):await db.rpc('create_first_group',{display_name:nickname});if(error){$('#stage-join-status').textContent=error.message;return;}groupId=code?data:data.id;if(code){pendingInvite='';clearInviteUrl();}await enterApp();if(!code)toast(`共享日历已创建，邀请码 ${data.invite_code}`);});
       if(pendingInvite)$('#stage-join-form').elements.code.value=pendingInvite;
